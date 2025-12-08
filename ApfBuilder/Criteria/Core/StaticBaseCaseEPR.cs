@@ -15,8 +15,7 @@ namespace ApfBuilder.Criteria.Core
             return new StaticBaseCaseEPR
                 (
                     preF,
-                    preF.EprPowerFlow - preF.IrOscExpressions
-                        ?? preF.EprPowerFlow
+                    preF.EprPowerFlow
                 );
         }
 
