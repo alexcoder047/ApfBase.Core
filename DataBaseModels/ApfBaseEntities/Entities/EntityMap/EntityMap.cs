@@ -19,7 +19,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                 },
                 { 
                     typeof(Seasons), 
-                    ("Сезон", "Справочники", false) 
+                    ("Сезон", "Справочники", true) 
                 },
                 { 
                     typeof(Annex), 
