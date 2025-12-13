@@ -162,6 +162,9 @@
     <Compile Include="ApfBaseEntities\EquipmentVsInfluencingEquipment.cs">
       <DependentUpon>ApfBaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="ApfBaseEntities\Performers.cs">
+      <DependentUpon>ApfBaseModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="ApfBaseEntities\Proxy\EntityPropertyProxy.cs" />
     <Compile Include="ApfBaseEntities\EntityProvider.cs" />
     <Compile Include="ApfBaseEntities\FrequencyPowerFlow.cs">

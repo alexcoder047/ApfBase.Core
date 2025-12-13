@@ -12,20 +12,12 @@ namespace DataBaseModels.ApfBaseEntities
     using System;
     using System.Collections.Generic;
     
-    public partial class BranchGroupScheme
+    public partial class Performers
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public BranchGroupScheme()
-        {
-            this.BranchGroupVsBranchGroupScheme = new HashSet<BranchGroupVsBranchGroupScheme>();
-        }
-    
-        public System.Guid Uid { get; set; }
-        public Nullable<double> Number { get; set; }
+        public int Id { get; set; }
+        public Nullable<bool> Using { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BranchGroupVsBranchGroupScheme> BranchGroupVsBranchGroupScheme { get; set; }
+        public string PhoneNumber { get; set; }
+        public Nullable<int> Priority { get; set; }
     }
 }

@@ -45,6 +45,7 @@ namespace DataBaseModels.ApfBaseEntities
         public virtual DbSet<InfluencingEquipment> InfluencingEquipment { get; set; }
         public virtual DbSet<Management> Management { get; set; }
         public virtual DbSet<ManagementTasks> ManagementTasks { get; set; }
+        public virtual DbSet<Performers> Performers { get; set; }
         public virtual DbSet<PostFaultConditions> PostFaultConditions { get; set; }
         public virtual DbSet<PreFaultConditions> PreFaultConditions { get; set; }
         public virtual DbSet<Seasons> Seasons { get; set; }

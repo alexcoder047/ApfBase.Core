@@ -136,6 +136,7 @@
           <Property Name="Uid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Number" Type="float" />
           <Property Name="Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Description" Type="nvarchar" MaxLength="4000" />
         </EntityType>
         <EntityType Name="BranchGroupVsBranchGroupScheme">
           <Key>
@@ -200,6 +201,7 @@
           </Key>
           <Property Name="Uid" Type="uniqueidentifier" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="4000" />
+          <Property Name="Priority" Type="int" />
         </EntityType>
         <EntityType Name="Management">
           <Key>
@@ -218,6 +220,16 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Performers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Using" Type="bit" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="PhoneNumber" Type="nvarchar" MaxLength="10" />
+          <Property Name="Priority" Type="int" />
         </EntityType>
         <EntityType Name="PostFaultConditions">
           <Key>
@@ -769,6 +781,7 @@
           <EntitySet Name="InfluencingEquipment" EntityType="Self.InfluencingEquipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Management" EntityType="Self.Management" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ManagementTasks" EntityType="Self.ManagementTasks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Performers" EntityType="Self.Performers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PostFaultConditions" EntityType="Self.PostFaultConditions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreFaultConditions" EntityType="Self.PreFaultConditions" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seasons" EntityType="Self.Seasons" Schema="dbo" store:Type="Tables" />
@@ -947,6 +960,7 @@
           <EntitySet Name="InfluencingEquipment" EntityType="ApfBaseModel.InfluencingEquipment" />
           <EntitySet Name="Management" EntityType="ApfBaseModel.Management" />
           <EntitySet Name="ManagementTasks" EntityType="ApfBaseModel.ManagementTasks" />
+          <EntitySet Name="Performers" EntityType="ApfBaseModel.Performers" />
           <EntitySet Name="PostFaultConditions" EntityType="ApfBaseModel.PostFaultConditions" />
           <EntitySet Name="PreFaultConditions" EntityType="ApfBaseModel.PreFaultConditions" />
           <EntitySet Name="Seasons" EntityType="ApfBaseModel.Seasons" />
@@ -1260,6 +1274,7 @@
           <Property Name="Uid" Type="Guid" Nullable="false" />
           <Property Name="Number" Type="Double" />
           <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BranchGroupVsBranchGroupScheme" Relationship="ApfBaseModel.BranchGroupVsBranchGroupScheme_BranchGroupScheme_fk" FromRole="BranchGroupScheme" ToRole="BranchGroupVsBranchGroupScheme" />
         </EntityType>
         <EntityType Name="BranchGroupVsBranchGroupScheme">
@@ -1340,6 +1355,7 @@
           </Key>
           <Property Name="Uid" Type="Guid" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="Priority" Type="Int32" />
           <NavigationProperty Name="EquipmentVsInfluencingEquipment" Relationship="ApfBaseModel.EquipmentVsInfluencingEquipment_InfluencingEquipment_fk" FromRole="InfluencingEquipment" ToRole="EquipmentVsInfluencingEquipment" />
           <NavigationProperty Name="PreFaultConditions" Relationship="ApfBaseModel.PreFaultConditions_InfluencingEquipment_fk" FromRole="InfluencingEquipment" ToRole="PreFaultConditions" />
         </EntityType>
@@ -1362,6 +1378,16 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Management" Relationship="ApfBaseModel.Management_ManagementTasks_fk" FromRole="ManagementTasks" ToRole="Management" />
+        </EntityType>
+        <EntityType Name="Performers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Using" Type="Boolean" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Priority" Type="Int32" />
         </EntityType>
         <EntityType Name="PostFaultConditions">
           <Key>
@@ -2059,6 +2085,7 @@
           <EntitySetMapping Name="BranchGroupScheme">
             <EntityTypeMapping TypeName="ApfBaseModel.BranchGroupScheme">
               <MappingFragment StoreEntitySet="BranchGroupScheme">
+                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
                 <ScalarProperty Name="Uid" ColumnName="Uid" />
@@ -2131,6 +2158,7 @@
           <EntitySetMapping Name="InfluencingEquipment">
             <EntityTypeMapping TypeName="ApfBaseModel.InfluencingEquipment">
               <MappingFragment StoreEntitySet="InfluencingEquipment">
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Uid" ColumnName="Uid" />
               </MappingFragment>
@@ -2152,6 +2180,17 @@
             <EntityTypeMapping TypeName="ApfBaseModel.ManagementTasks">
               <MappingFragment StoreEntitySet="ManagementTasks">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Performers">
+            <EntityTypeMapping TypeName="ApfBaseModel.Performers">
+              <MappingFragment StoreEntitySet="Performers">
+                <ScalarProperty Name="Priority" ColumnName="Priority" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Using" ColumnName="Using" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
