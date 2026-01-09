@@ -1445,6 +1445,15 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                     },
                                     new FieldDefinition()
                                     {
+                                        Name = "Priority",
+                                        FieldName = "Приоритет",
+                                        DataType = typeof(int),
+                                        Index = 2,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
                                         Name = "EquipmentVsInfluencingEquipment",
                                         FieldName = "EquipmentVsInfluencingEquipment",
                                         DataType = typeof(ICollection<EquipmentVsInfluencingEquipment>),
