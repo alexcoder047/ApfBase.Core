@@ -7,7 +7,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
 {
     public class EntityFieldMap : IMap<EntityFieldDefinition>
     {
-        private IReadOnlyDictionary<Type,
+        private readonly IReadOnlyDictionary<Type,
             IReadOnlyList<FieldDefinition>> _map =
                     new Dictionary<Type,
                         IReadOnlyList<FieldDefinition>>()
