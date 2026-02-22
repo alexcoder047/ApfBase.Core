@@ -64,9 +64,7 @@ namespace ApfBuilder.Services
                                 );
                             apnu.MaxValue = apnu.Value;
                         }
-                        if (type == CriterionType.Current || 
-                            type == CriterionType.CurrentAOPO
-                            )
+                        if (type == CriterionType.Current)
                         {
                             apnu.Value = GetValueOrDescription(roundParam,
                                 apnu.CurrentCoefficient, 
