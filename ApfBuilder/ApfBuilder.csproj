@@ -97,6 +97,7 @@
     <Compile Include="Criteria\Core\Interfaces\ICurrentCriterion.cs" />
     <Compile Include="Criteria\Core\Interfaces\IFrequencyCriterion.cs" />
     <Compile Include="Criteria\Core\Interfaces\ISecondaryCriterion.cs" />
+    <Compile Include="Criteria\CriterionRule.cs" />
     <Compile Include="PowerFlow\Factory\PowerFlowEmergencyFactory.cs" />
     <Compile Include="PowerFlow\Factory\PowerFlowForcedStateFactory.cs" />
     <Compile Include="PowerFlow\Factory\PowerFlowSafeFactory.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Services\Analysis\Reference\IAPFReference.cs" />
     <Compile Include="Services\Analysis\Reference\PowerFlowReference.cs" />
     <Compile Include="Services\Analysis\Reference\SummaryReference.cs" />
+    <Compile Include="Services\CriterionBuilder.cs" />
     <Compile Include="Services\EmergencyResponseHandler.cs" />
     <Compile Include="PowerFlow\Factory\IPowerFlowCollectionFactory.cs" />
     <Compile Include="PowerFlow\Factory\IPowerFlowFactory.cs" />
