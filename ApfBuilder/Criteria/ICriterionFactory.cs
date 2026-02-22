@@ -7,5 +7,7 @@ namespace ApfBuilder.Criteria
         ICriterion[] BaseStateCriteria { get; }
 
         ICriterion[] ForcedStateCriteria { get; }
+
+        ICriterion[] AdditionalCriteria { get; }
     }
 }

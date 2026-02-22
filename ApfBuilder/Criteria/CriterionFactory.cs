@@ -1,8 +1,6 @@
 ﻿using ApfBuilder.Context;
-using ApfBuilder.Criteria.Core;
 using ApfBuilder.Criteria.Core.Interfaces;
 using ApfBuilder.Services;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace ApfBuilder.Criteria
@@ -17,80 +15,30 @@ namespace ApfBuilder.Criteria
 
         public ICriterion[] ForcedStateCriteria { get; }
 
+        public ICriterion[] AdditionalCriteria { get; }
+
         public CriterionFactory(IAPFContext context)
         {
             _context = context;
             _selector = new CriterionSelector();
-            
-            BaseStateCriteria = GetSelectedCriteria(
-                CreateSimpleCriteria(),
-                CreateComplexCriteria()
-                )
-            .ToArray();
 
-            ForcedStateCriteria = _selector.GetSimpleSelector(
-                CreateForsedStateCriteria()
-                )
-            .ToArray();
-        }
+            var built = CriterionRule.BuildCriteria(_context);
 
-        private IEnumerable<ICriterion> GetSelectedCriteria(
-            IEnumerable<ICriterion> simpleCriteria,
-            IEnumerable<ICriterion[]> complexCriteria)
-                => _selector.GetSimpleSelector(simpleCriteria)
-                    .Concat(_selector.GetComplexSelector(complexCriteria)
-                    );
+            var byCase = built.ByCase;
+            var byComplexSelector = built.ByComplexSelector;
 
-        private IEnumerable<ICriterion[]> CreateComplexCriteria()
-        {
-            foreach (var postF in _context.PreF.PostFaultConditions)
-            {
-                if (!(postF.Using ?? false)) continue;
+            BaseStateCriteria =
+                _selector.GetSimpleSelector(byCase[CriterionCase.BaseState])
+                .Concat(_selector.GetComplexSelector(byComplexSelector))
+                .ToArray();
 
-                yield return new[]
-                {
-                    Current.CreateStandard(postF),
-                    Current.CreateAOPO(postF),
-                    Dynamic.Create(postF),
-                    Static.Create(postF),
-                    Voltage.Create(postF),
-                    Frequency.Create(postF)
-                };
-            }
-        }
+            ForcedStateCriteria =
+                _selector.GetSimpleSelector(byCase[CriterionCase.ForcedState])
+                .ToArray();
 
-        private ICriterion[] CreateSimpleCriteria()
-        {
-            return new[]
-            {
-                CurrentSecondary.CreateStandard(_context.PreF),
-                CurrentSecondary.CreateAOPO(_context.PreF),
-                VoltageSecondary.Create(_context.PreF),
-                StaticBaseCaseTPR.Create(_context.PreF),
-                StaticBaseCaseEPR.CreateStandard(_context.PreF)
-            };
-        }
-
-        private ICriterion[] CreateForsedStateCriteria()
-        {
-            var criterionList = new List<ICriterion>()
-            {
-                CurrentSecondary.CreateStandard(_context.PreF),
-                CurrentSecondary.CreateAOPO(_context.PreF),
-                StaticBaseCaseEPR.CreateForcedState(_context.PreF)
-            };
-
-            foreach (var postF in _context.PreF.PostFaultConditions)
-            {
-                criterionList.Add(
-                    Current.CreateStandard(postF)
-                    );
-                criterionList.Add(
-                    Current.CreateAOPO(postF)
-                    );
-            }
-
-            return criterionList.ToArray();
+            AdditionalCriteria =
+                _selector.GetSimpleSelector(byCase[CriterionCase.Additional])
+                .ToArray();
         }
     }
 }
