@@ -30,7 +30,7 @@ namespace ApfBuilder.Context
                 {
                     try
                     {
-                        participant.PowerFlows = Builder.Build(participant);
+                        participant.PowerFlows = PowerFlowBuilder.Build(participant);
                         participant.APFHandler();
                     }
                     catch (Exception ex)

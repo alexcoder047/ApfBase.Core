@@ -6,7 +6,7 @@ using static ApfBuilder.Criteria.CriterionAttribute;
 
 namespace ApfBuilder.Criteria.Core
 {
-    [AllowablePF]
+    [FirstAPF]
     public sealed class StaticBaseCaseTPR : CriterionBase, IBaseCaseCriterion
     {
         public static ICriterion Create(PreFaultConditions preF)

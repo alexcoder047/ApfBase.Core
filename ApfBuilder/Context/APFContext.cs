@@ -133,7 +133,7 @@ namespace ApfBuilder.Context
         {
             try
             {
-                PowerFlows = Builder.Build(this);
+                PowerFlows = PowerFlowBuilder.Build(this);
                 APFHandler();
             }
             catch (Exception ex)
@@ -151,7 +151,7 @@ namespace ApfBuilder.Context
                 {
                     lock (_locker)
                     {
-                        PowerFlows = Builder.Build(this);
+                        PowerFlows = PowerFlowBuilder.Build(this);
                         APFHandler();
                         Save();
                     }

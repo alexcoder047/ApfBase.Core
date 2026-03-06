@@ -6,7 +6,7 @@ using static ApfBuilder.Criteria.CriterionAttribute;
 
 namespace ApfBuilder.Criteria.Core
 {
-    [EmergencyPF]
+    [EmergencyAPF]
     public sealed class StaticBaseCaseEPR : CriterionBase, IBaseCaseCriterion
     {
         public static ICriterion CreateStandard(

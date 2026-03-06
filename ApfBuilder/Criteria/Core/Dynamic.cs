@@ -8,7 +8,7 @@ using static ApfBuilder.Criteria.CriterionAttribute;
 
 namespace ApfBuilder.Criteria.Core
 {
-    [AllowablePF]
+    [FirstAPF]
     [CriterionPriority(2)]
     public sealed class Dynamic : CriterionBase, IEmergencyResponseCriterion
     {

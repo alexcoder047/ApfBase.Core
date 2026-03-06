@@ -6,7 +6,7 @@ using static ApfBuilder.Criteria.CriterionAttribute;
 
 namespace ApfBuilder.Criteria.Core
 {
-    [SecondaryAllowablePF]
+    [SecondaryAPF]
     public sealed class VoltageSecondary : CriterionBase, ISecondaryCriterion
     {
         public static ICriterion Create(PreFaultConditions preF)

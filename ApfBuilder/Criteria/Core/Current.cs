@@ -8,7 +8,7 @@ using static ApfBuilder.Criteria.CriterionAttribute;
 
 namespace ApfBuilder.Criteria.Core
 {
-    [AllowablePF]
+    [FirstAPF]
     [CriterionPriority(1)]
     public sealed class Current : CriterionBase, ICurrentCriterion, IEmergencyResponseCriterion
     {
