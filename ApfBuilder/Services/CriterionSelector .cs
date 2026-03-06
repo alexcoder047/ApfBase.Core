@@ -1,4 +1,4 @@
-﻿using ApfBuilder.Criteria;
+﻿using ApfBuilder.Criteria.Extension;
 using ApfBuilder.Criteria.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,11 +7,11 @@ namespace ApfBuilder.Services
 {
     public class CriterionSelector
     {
-        public IEnumerable<ICriterion> GetSimpleSelector(
+        public static IEnumerable<ICriterion> SimpleSelector(
             IEnumerable<ICriterion> criteriaList) 
                 => criteriaList.Where(c => c.Value != null);
 
-        public IEnumerable<ICriterion> GetComplexSelector(
+        public static IEnumerable<ICriterion> ComplexSelector(
             IEnumerable<ICriterion[]> 
             criteriaList)
         {

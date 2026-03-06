@@ -1,4 +1,6 @@
-﻿using ApfBuilder.Criteria.Core.Interfaces;
+﻿using ApfBuilder.Criteria.Core;
+using ApfBuilder.Criteria.Core.Interfaces;
+using ApfBuilder.Criteria.Extension;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,14 +10,20 @@ namespace ApfBuilder.PowerFlow.Factory
     {
         public IEnumerable<IPowerFlowFactory> PowerFlowFactories { get; }
 
-        private PowerFlowCollectionFactory(
-            IEnumerable<ICriterion> criteria)
+        private PowerFlowCollectionFactory(IEnumerable<ICriterion> criteria)
         {
+            var baseState = criteria.ForCase(CriterionCase.BaseState);
+            var forcedState = criteria.ForCase(CriterionCase.ForcedState);
+
+            var originalBaseState = baseState.UnwrapAll();
+            var originalForcedState = forcedState.UnwrapAll();
+
             PowerFlowFactories = new IPowerFlowFactory[]
             {
-                new PowerFlowStandardFactory(criteria),
-                new PowerFlowSafeFactory(criteria),
-                new PowerFlowEmergencyFactory(criteria)
+                new PowerFlowStandardFactory(originalBaseState),
+                new PowerFlowSafeFactory(originalBaseState),
+                new PowerFlowEmergencyFactory(originalBaseState),
+                new PowerFlowForcedStateFactory(originalForcedState)
             };
         }
 

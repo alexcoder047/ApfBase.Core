@@ -81,6 +81,7 @@
   <ItemGroup>
     <Compile Include="Context\APFContextExtensions.cs" />
     <Compile Include="Criteria\Core\CriterionBase.cs" />
+    <Compile Include="Criteria\Core\CriterionCase.cs" />
     <Compile Include="Criteria\Core\Current.cs" />
     <Compile Include="Criteria\Core\CurrentSecondary.cs" />
     <Compile Include="Criteria\Core\Dynamic.cs" />
@@ -90,14 +91,22 @@
     <Compile Include="Criteria\Core\StaticBaseCaseTPR.cs" />
     <Compile Include="Criteria\Core\Voltage.cs" />
     <Compile Include="Criteria\Core\VoltageSecondary.cs" />
-    <Compile Include="Criteria\CriterionExtension.cs" />
+    <Compile Include="Criteria\Decorator\ICriterionDecorator.cs" />
+    <Compile Include="Criteria\Extension\CriterionCaseExtension.cs" />
+    <Compile Include="Criteria\Extension\CriterionDecoratorExtension.cs" />
+    <Compile Include="Criteria\Extension\CriterionEnumerableExtension.cs" />
+    <Compile Include="Criteria\Extension\CriterionExtension.cs" />
     <Compile Include="Criteria\Core\CriterionType.cs" />
     <Compile Include="Criteria\Core\Interfaces\IBaseCaseCriterion.cs" />
     <Compile Include="Criteria\Core\Interfaces\IEmergencyResponceCriterion.cs" />
     <Compile Include="Criteria\Core\Interfaces\ICurrentCriterion.cs" />
     <Compile Include="Criteria\Core\Interfaces\IFrequencyCriterion.cs" />
     <Compile Include="Criteria\Core\Interfaces\ISecondaryCriterion.cs" />
-    <Compile Include="Criteria\CriterionRule.cs" />
+    <Compile Include="Criteria\Rule\CriterionRuleBase.cs" />
+    <Compile Include="Criteria\Decorator\CaseCriterionDecorator.cs" />
+    <Compile Include="Criteria\Decorator\CriterionDecoratorBase.cs" />
+    <Compile Include="Criteria\Rule\PostFaultRule.cs" />
+    <Compile Include="Criteria\Rule\PreFaultRule.cs" />
     <Compile Include="PowerFlow\Factory\PowerFlowEmergencyFactory.cs" />
     <Compile Include="PowerFlow\Factory\PowerFlowForcedStateFactory.cs" />
     <Compile Include="PowerFlow\Factory\PowerFlowSafeFactory.cs" />
@@ -132,7 +141,7 @@
     <Compile Include="Services\CriterionSelector .cs" />
     <Compile Include="Criteria\Core\Interfaces\ICriterion.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\Builder.cs" />
+    <Compile Include="Services\PowerFlowBuilder.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DataBaseModels\DataBaseModels.csproj">
@@ -150,6 +159,10 @@
     <ProjectReference Include="..\Serialize\Serialize.csproj">
       <Project>{2393A73C-E1FA-4940-91D5-049D78D4D6E2}</Project>
       <Name>Serialize</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Shared\Shared.csproj">
+      <Project>{769bc214-23e6-455d-971d-389de5ae684e}</Project>
+      <Name>Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

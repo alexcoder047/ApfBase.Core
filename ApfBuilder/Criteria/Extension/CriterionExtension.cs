@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using static ApfBuilder.Criteria.CriterionAttribute;
 
-namespace ApfBuilder.Criteria
+namespace ApfBuilder.Criteria.Extension
 {
     public static class CriterionExtension
     {

@@ -17,5 +17,7 @@
         int? RoundValue { get; }
 
         CriterionType Type { get; }
+
+        CriterionCase Case { get; }
     }
 }

@@ -20,6 +20,8 @@ namespace ApfBuilder.Criteria.Core
 
         public int? RoundValue { get; }
 
+        public CriterionCase Case => CriterionCase.None;
+
         public abstract CriterionType Type { get; }
 
         protected CriterionBase() { }

@@ -1,7 +1,10 @@
 ﻿using ApfBuilder.Context;
 using ApfBuilder.Criteria.Core.Interfaces;
+using ApfBuilder.Criteria.Core;
 using ApfBuilder.Services;
 using System.Linq;
+using System;
+using ApfBuilder.Criteria.Extension;
 
 namespace ApfBuilder.Criteria
 {
@@ -9,35 +12,34 @@ namespace ApfBuilder.Criteria
     {
         private readonly IAPFContext _context;
 
-        private readonly CriterionSelector _selector;
-
-        public ICriterion[] BaseStateCriteria { get; }
-
-        public ICriterion[] ForcedStateCriteria { get; }
-
-        public ICriterion[] AdditionalCriteria { get; }
+        public ICriterion[] Criteria { get; }
 
         public CriterionFactory(IAPFContext context)
         {
             _context = context;
-            _selector = new CriterionSelector();
 
-            var built = CriterionRule.BuildCriteria(_context);
+            var built = CriterionBuilder.Build(_context);
 
             var byCase = built.ByCase;
             var byComplexSelector = built.ByComplexSelector;
 
-            BaseStateCriteria =
-                _selector.GetSimpleSelector(byCase[CriterionCase.BaseState])
-                .Concat(_selector.GetComplexSelector(byComplexSelector))
+            var baseStateCriteria =
+                CriterionSelector
+                .SimpleSelector(byCase[CriterionCase.BaseState])
+                .Concat(CriterionSelector.ComplexSelector(byComplexSelector))
                 .ToArray();
 
-            ForcedStateCriteria =
-                _selector.GetSimpleSelector(byCase[CriterionCase.ForcedState])
+            var forcedStateCriteria =
+                CriterionSelector
+                .SimpleSelector(byCase[CriterionCase.ForcedState])
                 .ToArray();
 
-            AdditionalCriteria =
-                _selector.GetSimpleSelector(byCase[CriterionCase.Additional])
+            ICriterion[] additionalCriteria = Array.Empty<ICriterion>();
+
+            Criteria = baseStateCriteria
+                .Concat(forcedStateCriteria)
+                .Concat(additionalCriteria)
+                .DistinctByInner()
                 .ToArray();
         }
     }

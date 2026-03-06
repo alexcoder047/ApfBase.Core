@@ -4,10 +4,6 @@ namespace ApfBuilder.Criteria
 {
     public interface ICriterionFactory
     {
-        ICriterion[] BaseStateCriteria { get; }
-
-        ICriterion[] ForcedStateCriteria { get; }
-
-        ICriterion[] AdditionalCriteria { get; }
+        ICriterion[] Criteria { get; }
     }
 }

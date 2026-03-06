@@ -21,7 +21,7 @@ namespace ApfBuilder.PowerFlow
         {
             Criteria = Criteria.Where(x => x
                 .GetType()
-                .GetCustomAttributes(typeof(EmergencyPF), false)
+                .GetCustomAttributes(typeof(EmergencyAPF), false)
                 .Any()
                 )
             .ToArray();

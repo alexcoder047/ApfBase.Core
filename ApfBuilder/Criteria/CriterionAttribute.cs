@@ -4,11 +4,11 @@ namespace ApfBuilder.Criteria
 {
     public class CriterionAttribute
     {
-        public class AllowablePF : Attribute { }
+        public class FirstAPF : Attribute { }
 
-        public class SecondaryAllowablePF : Attribute { }
+        public class SecondaryAPF : Attribute { }
 
-        public class EmergencyPF : Attribute { }
+        public class EmergencyAPF : Attribute { }
 
         public class CriterionPriority : Attribute
         {

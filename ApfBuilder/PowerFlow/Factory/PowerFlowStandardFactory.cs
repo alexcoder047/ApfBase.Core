@@ -1,5 +1,4 @@
-﻿using ApfBuilder.Criteria;
-using ApfBuilder.Criteria.Core;
+﻿using ApfBuilder.Criteria.Extension;
 using ApfBuilder.Criteria.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,20 +20,16 @@ namespace ApfBuilder.PowerFlow.Factory
         private IEnumerable<ICriterion> Filter(
             IEnumerable<ICriterion> criteria)
         {
-            var baseCriteria = criteria.Where(x => x
-                .GetType()
-                .GetCustomAttributes(typeof(AllowablePF), false)
-                .Any()
-            );
+            var baseCriteria = criteria
+                .Where(x => x.HasAttribute<FirstAPF>()
+                );
 
             var minValueOfMaxValueBase = baseCriteria.Min(
                 c => c.MaxValue);
 
-            var secondCriteria = criteria.Where(x => x
-                .GetType()
-                .GetCustomAttributes(typeof(SecondaryAllowablePF), false)
-                .Any()
-            );
+            var secondCriteria = criteria
+                .Where(x => x.HasAttribute<SecondaryAPF>()
+                );
 
             foreach (var secondCriterion in secondCriteria)
             {

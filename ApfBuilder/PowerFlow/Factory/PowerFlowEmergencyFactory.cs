@@ -1,4 +1,5 @@
 ﻿using ApfBuilder.Criteria.Core.Interfaces;
+using ApfBuilder.Criteria.Extension;
 using System.Collections.Generic;
 using System.Linq;
 using static ApfBuilder.Criteria.CriterionAttribute;
@@ -19,22 +20,17 @@ namespace ApfBuilder.PowerFlow.Factory
         private IEnumerable<ICriterion> Filter(
             IEnumerable<ICriterion> criteria)
         {
-            var emergencyCriterion = criteria.Where(x => x
-                .GetType()
-                .GetCustomAttributes(typeof(EmergencyPF), false)
-                .Any()
-                )
-            .FirstOrDefault();
+            var emergencyCriterion = criteria
+                .Where(x => x.HasAttribute<EmergencyAPF>())
+                .FirstOrDefault();
 
             if (emergencyCriterion != null)
             {
                 yield return emergencyCriterion;
 
-                var secondCriteria = criteria.Where(x => x
-                    .GetType()
-                    .GetCustomAttributes(typeof(SecondaryAllowablePF), false)
-                    .Any()
-                );
+                var secondCriteria = criteria
+                    .Where(x => x.HasAttribute<SecondaryAPF>()
+                    );
 
                 foreach (var secondCriterion in secondCriteria)
                 {

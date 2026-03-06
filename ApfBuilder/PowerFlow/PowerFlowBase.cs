@@ -1,4 +1,4 @@
-﻿using ApfBuilder.Criteria;
+﻿using ApfBuilder.Criteria.Extension;
 using ApfBuilder.Criteria.Core.Interfaces;
 using System.Collections.Generic;
 using System.Linq;
