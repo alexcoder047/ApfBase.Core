@@ -10,6 +10,8 @@ namespace ApfBuilder.Criteria
 
         public class EmergencyAPF : Attribute { }
 
+        public class AdditionalAPF : Attribute { }
+
         public class CriterionPriority : Attribute
         {
             public int Priority { get; }

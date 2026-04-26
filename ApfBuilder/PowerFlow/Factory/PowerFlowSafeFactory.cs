@@ -60,19 +60,6 @@ namespace ApfBuilder.PowerFlow.Factory
                     : otherMax;
             }
 
-            var secondCriteria = criteria
-                .Where(x => x.HasAttribute<SecondaryAPF>()
-                );
-
-            foreach (var secondCriterion in secondCriteria)
-            {
-                if (secondCriterion?.MaxValue <
-                    minValueOfMaxValueBaseResult)
-                {
-                    yield return secondCriterion;
-                }
-            }
-
             foreach (var criterion in emergencyResponceCriteria?.ToList())
             {
                 if (criterion?.MinValueER <= minValueOfMaxValueBaseResult)
@@ -87,6 +74,28 @@ namespace ApfBuilder.PowerFlow.Factory
                 {
                     yield return criterion;
                 }
+            }
+
+            var secondCriteria = criteria
+                .Where(x => x.HasAttribute<SecondaryAPF>()
+                );
+
+            foreach (var secondCriterion in secondCriteria)
+            {
+                if (secondCriterion?.MaxValue <
+                    minValueOfMaxValueBaseResult)
+                {
+                    yield return secondCriterion;
+                }
+            }
+
+            var additionalCriteria = criteria
+                .Where(x => x.HasAttribute<AdditionalAPF>()
+                );
+
+            foreach (var additionalCriterion in additionalCriteria)
+            {
+                yield return additionalCriterion;
             }
         }
     }

@@ -8,7 +8,7 @@ using static ApfBuilder.Criteria.CriterionAttribute;
 
 namespace ApfBuilder.Criteria.Core
 {
-    [FirstAPF]
+    [AdditionalAPF]
     public sealed class Frequency : CriterionBase, IFrequencyCriterion, IEmergencyResponseCriterion
     {
         public static ICriterion Create(PostFaultConditions postF)

@@ -27,6 +27,14 @@ namespace ApfBuilder.PowerFlow.Factory
             var minValueOfMaxValueBase = baseCriteria.Min(
                 c => c.MaxValue);
 
+            foreach (var criterion in baseCriteria?.ToList())
+            {
+                if (criterion?.MinValue <= minValueOfMaxValueBase?.MaxValue)
+                {
+                    yield return criterion;
+                }
+            }
+
             var secondCriteria = criteria
                 .Where(x => x.HasAttribute<SecondaryAPF>()
                 );
@@ -40,12 +48,13 @@ namespace ApfBuilder.PowerFlow.Factory
                 }
             }
 
-            foreach (var criterion in baseCriteria?.ToList())
+            var additionalCriteria = criteria
+                .Where(x => x.HasAttribute<AdditionalAPF>()
+                );
+
+            foreach (var additionalCriterion in additionalCriteria)
             {
-                if (criterion?.MinValue <= minValueOfMaxValueBase?.MaxValue)
-                {
-                    yield return criterion;
-                }
+                yield return additionalCriterion;
             }
         }
     }

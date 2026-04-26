@@ -35,6 +35,7 @@ namespace ApfBuilder.Criteria
                 .ToArray();
 
             ICriterion[] additionalCriteria = Array.Empty<ICriterion>();
+            //var additionalCriteria = byCase[CriterionCase.Additional].ToArray();
 
             Criteria = baseStateCriteria
                 .Concat(forcedStateCriteria)
