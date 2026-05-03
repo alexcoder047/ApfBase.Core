@@ -25,17 +25,20 @@ namespace ApfBuilder.Criteria
 
             var baseStateCriteria =
                 CriterionSelector
-                .SimpleSelector(byCase[CriterionCase.BaseState])
+                .SimpleSelector(byCase[CriterionCase.BaseState], x => x.Value)
                 .Concat(CriterionSelector.ComplexSelector(byComplexSelector))
                 .ToArray();
 
             var forcedStateCriteria =
                 CriterionSelector
-                .SimpleSelector(byCase[CriterionCase.ForcedState])
+                .SimpleSelector(byCase[CriterionCase.ForcedState], 
+                    x => x.Value)
                 .ToArray();
 
-            ICriterion[] additionalCriteria = Array.Empty<ICriterion>();
-            //var additionalCriteria = byCase[CriterionCase.Additional].ToArray();
+            var additionalCriteria =
+                CriterionSelector
+                .SimpleSelector(byCase[CriterionCase.Additional], 
+                    x => x.MaxValue);
 
             Criteria = baseStateCriteria
                 .Concat(forcedStateCriteria)

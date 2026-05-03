@@ -14,16 +14,21 @@ namespace ApfBuilder.PowerFlow.Factory
         {
             var baseState = criteria.ForCase(CriterionCase.BaseState);
             var forcedState = criteria.ForCase(CriterionCase.ForcedState);
+            var additional = criteria.ForCase(CriterionCase.Additional);
 
             var originalBaseState = baseState.UnwrapAll();
             var originalForcedState = forcedState.UnwrapAll();
+            var originalAdditional = additional.UnwrapAll();
+
+            var normal = originalBaseState.Concat(originalAdditional);
+            var forced = originalForcedState;
 
             PowerFlowFactories = new IPowerFlowFactory[]
             {
-                new PowerFlowStandardFactory(originalBaseState),
-                new PowerFlowSafeFactory(originalBaseState),
-                new PowerFlowEmergencyFactory(originalBaseState),
-                new PowerFlowForcedStateFactory(originalForcedState)
+                new PowerFlowStandardFactory(normal),
+                new PowerFlowSafeFactory(normal),
+                new PowerFlowEmergencyFactory(normal),
+                new PowerFlowForcedStateFactory(forced)
             };
         }
 

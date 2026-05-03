@@ -41,7 +41,7 @@ namespace ApfBuilder.Criteria.Rule
                 Voltage.Create),
 
             new PostFaultRule(
-                Cases(CriterionCase.BaseState),
+                Cases(CriterionCase.Additional),
                 pf => true,
                 false,
                 Frequency.Create)
