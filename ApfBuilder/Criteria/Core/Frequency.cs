@@ -38,7 +38,7 @@ namespace ApfBuilder.Criteria.Core
                 FrequencyPowerFlow = postF.FrequencyPowerFlow;
                 Disturbance = postF.Disturbances;
                 EmergencyResponse = EmergencyResponseHandler.
-                    ProcessHandler(base.RoundValue, this.Type, postF.APNU);
+                    ProcessHandler(base.RoundValue, this.Type, postF.APNU, postF.DAR);
 
                 Name = FrequencyPowerFlow?.PowerConsumptionName;
                 Value = FrequencyPowerFlow?.PowerConsumptionFactor;

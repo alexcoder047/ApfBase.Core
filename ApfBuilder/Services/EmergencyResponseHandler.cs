@@ -47,6 +47,16 @@ namespace ApfBuilder.Services
                         aosn.MaxValue = aosn.Value;
                         yield return aosn;
                         break;
+                    case DAR dar:
+                        dar.Value = GetValueOrDescription(roundParam,
+                            dar.Coefficient, dar.ControlValuePowerFlow
+                            );
+                        dar.Description = GetValueOrDescription(roundParam,
+                            dar.Coefficient, dar.FormalName
+                            );
+                        dar.MaxValue = dar.Value;
+                        yield return dar;
+                        break;
                     case APNU apnu:
                         if (type == CriterionType.Static)
                         {
