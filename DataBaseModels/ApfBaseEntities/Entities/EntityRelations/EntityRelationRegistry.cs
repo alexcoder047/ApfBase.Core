@@ -73,6 +73,22 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityRelations
                 RelationKind = RelationKind.OneToMany
             },
             #endregion ARPMRelations
+            #region DARRelations
+            new EntityRelationMetadata
+            {
+                EntityType = typeof(DAR),
+                RelatedEntityType = typeof(BranchGroup),
+                NavigationProperty = "BranchGroupProxy",
+                RelationKind = RelationKind.OneToMany
+            },
+            new EntityRelationMetadata
+            {
+                EntityType = typeof(DAR),
+                RelatedEntityType = typeof(Seasons),
+                NavigationProperty = "SeasonsProxy",
+                RelationKind = RelationKind.OneToMany
+            },
+            #endregion DARRelations
             #region SingleRelations
             new EntityRelationMetadata
             {
@@ -121,6 +137,13 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityRelations
                 EntityType = typeof(Management),
                 RelatedEntityType = typeof(ManagementTasks),
                 NavigationProperty = "ManagementTasksProxy",
+                RelationKind = RelationKind.OneToMany
+            },
+            new EntityRelationMetadata
+            {
+                EntityType = typeof(FrequencyPowerFlow),
+                RelatedEntityType = typeof(Conditions),
+                NavigationProperty = "ConditionsProxy",
                 RelationKind = RelationKind.OneToMany
             },
             #endregion SingleRelations
@@ -223,6 +246,13 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityRelations
                 EntityType = typeof(PostFaultConditions),
                 RelatedEntityType = typeof(AOSN),
                 NavigationProperty = "AOSNProxy",
+                RelationKind = RelationKind.OneToMany
+            },
+            new EntityRelationMetadata
+            {
+                EntityType = typeof(PostFaultConditions),
+                RelatedEntityType = typeof(DAR),
+                NavigationProperty = "DARProxy",
                 RelationKind = RelationKind.OneToMany
             },
             new EntityRelationMetadata

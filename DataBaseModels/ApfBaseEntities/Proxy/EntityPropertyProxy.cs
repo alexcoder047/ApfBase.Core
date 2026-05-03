@@ -256,6 +256,64 @@ namespace DataBaseModels.ApfBaseEntities
     }
     #endregion ARPMProxy
 
+    #region DARProxy
+    public partial class DAR : IPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string propertyName) =>
+            PropertyChanged?.Invoke(
+                this, new PropertyChangedEventArgs(propertyName)
+                );
+
+        [ProxyFor(nameof(BranchGroupUid))]
+        [ProxyFor(nameof(BranchGroup))]
+        public Guid? BranchGroupProxy
+        {
+            get => BranchGroupUid;
+            set
+            {
+                using (var context = new ApfBaseContext(
+                    DataBaseConnection.ConnectionString))
+                {
+                    var temp = context.BranchGroup.FirstOrDefault(
+                        t => t.Uid == value);
+
+                    BranchGroup = temp;
+                    BranchGroupUid = temp?.Uid;
+
+                    OnPropertyChanged(nameof(BranchGroup));
+                    OnPropertyChanged(nameof(BranchGroupUid));
+                    OnPropertyChanged(nameof(BranchGroupProxy));
+                }
+            }
+        }
+
+        [ProxyFor(nameof(SeasonsId))]
+        [ProxyFor(nameof(Seasons))]
+        public int? SeasonsProxy
+        {
+            get => SeasonsId;
+            set
+            {
+                using (var context = new ApfBaseContext(
+                    DataBaseConnection.ConnectionString))
+                {
+                    var temp = context.Seasons.FirstOrDefault(
+                        t => t.Id == value);
+
+                    Seasons = temp;
+                    SeasonsId = temp?.Id;
+
+                    OnPropertyChanged(nameof(Seasons));
+                    OnPropertyChanged(nameof(SeasonsId));
+                    OnPropertyChanged(nameof(SeasonsProxy));
+                }
+            }
+        }
+    }
+    #endregion DARProxy
+
     #region BoundingElementsProxy
     public partial class BoundingElements : IPropertyChanged
     {
@@ -497,6 +555,29 @@ namespace DataBaseModels.ApfBaseEntities
 
         public string FrequencyFormalNameProxy => 
             $"{PowerConsumptionFactor} * {PowerConsumptionName}";
+
+        [ProxyFor(nameof(ConditionId))]
+        [ProxyFor(nameof(Conditions))]
+        public int? ConditionsProxy
+        {
+            get => ConditionId;
+            set
+            {
+                using (var context = new ApfBaseContext(
+                    DataBaseConnection.ConnectionString))
+                {
+                    var temp = context.Conditions.FirstOrDefault(
+                        t => t.Id == value);
+
+                    Conditions = temp;
+                    ConditionId = temp?.Id;
+
+                    OnPropertyChanged(nameof(Conditions));
+                    OnPropertyChanged(nameof(ConditionId));
+                    OnPropertyChanged(nameof(ConditionsProxy));
+                }
+            }
+        }
     }
     #endregion FrequencyPowerFlowProxy
 
@@ -894,6 +975,29 @@ namespace DataBaseModels.ApfBaseEntities
                     OnPropertyChanged(nameof(AOSN));
                     OnPropertyChanged(nameof(AosnId));
                     OnPropertyChanged(nameof(AOSNProxy));
+                }
+            }
+        }
+
+        [ProxyFor(nameof(DarId))]
+        [ProxyFor(nameof(DAR))]
+        public int? DARProxy
+        {
+            get => DarId;
+            set
+            {
+                using (var context = new ApfBaseContext(
+                    DataBaseConnection.ConnectionString))
+                {
+                    var temp = context.DAR.FirstOrDefault(
+                        t => t.Id == value);
+
+                    DAR = temp;
+                    DarId = temp?.Id;
+
+                    OnPropertyChanged(nameof(DAR));
+                    OnPropertyChanged(nameof(DarId));
+                    OnPropertyChanged(nameof(DARProxy));
                 }
             }
         }
