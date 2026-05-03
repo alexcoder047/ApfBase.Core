@@ -12,24 +12,24 @@ namespace DataBaseModels.ApfBaseEntities
     using System;
     using System.Collections.Generic;
     
-    public partial class FrequencyPowerFlow
+    public partial class DAR
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public FrequencyPowerFlow()
+        public DAR()
         {
             this.PostFaultConditions = new HashSet<PostFaultConditions>();
         }
     
         public int Id { get; set; }
-        public Nullable<int> ConditionId { get; set; }
-        public Nullable<double> PowerConsumptionFactor { get; set; }
-        public string PowerConsumptionName { get; set; }
-        public Nullable<double> MinValue { get; set; }
-        public Nullable<double> MaxValue { get; set; }
-        public Nullable<bool> Normal { get; set; }
-        public Nullable<bool> Verification { get; set; }
+        public Nullable<System.Guid> BranchGroupUid { get; set; }
+        public Nullable<int> SeasonsId { get; set; }
+        public string Name { get; set; }
+        public string FormalName { get; set; }
+        public Nullable<double> ControlValuePowerFlow { get; set; }
+        public Nullable<double> Coefficient { get; set; }
     
-        public virtual Conditions Conditions { get; set; }
+        public virtual BranchGroup BranchGroup { get; set; }
+        public virtual Seasons Seasons { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PostFaultConditions> PostFaultConditions { get; set; }
     }

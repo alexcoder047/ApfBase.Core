@@ -38,6 +38,7 @@ namespace DataBaseModels.ApfBaseEntities
         public virtual DbSet<BranchGroupScheme> BranchGroupScheme { get; set; }
         public virtual DbSet<BranchGroupVsBranchGroupScheme> BranchGroupVsBranchGroupScheme { get; set; }
         public virtual DbSet<Conditions> Conditions { get; set; }
+        public virtual DbSet<DAR> DAR { get; set; }
         public virtual DbSet<Disturbances> Disturbances { get; set; }
         public virtual DbSet<Equipment> Equipment { get; set; }
         public virtual DbSet<EquipmentVsInfluencingEquipment> EquipmentVsInfluencingEquipment { get; set; }

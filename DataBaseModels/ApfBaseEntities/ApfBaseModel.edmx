@@ -159,6 +159,18 @@
           <Property Name="MinValue" Type="float" />
           <Property Name="MaxValue" Type="float" />
         </EntityType>
+        <EntityType Name="DAR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BranchGroupUid" Type="uniqueidentifier" />
+          <Property Name="SeasonsId" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" />
+          <Property Name="FormalName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ControlValuePowerFlow" Type="float" />
+          <Property Name="Coefficient" Type="float" />
+        </EntityType>
         <EntityType Name="Disturbances">
           <Key>
             <PropertyRef Name="Id" />
@@ -190,10 +202,13 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConditionId" Type="int" />
           <Property Name="PowerConsumptionFactor" Type="float" />
           <Property Name="PowerConsumptionName" Type="nvarchar" MaxLength="100" />
           <Property Name="MinValue" Type="float" />
           <Property Name="MaxValue" Type="float" />
+          <Property Name="Normal" Type="bit" />
+          <Property Name="Verification" Type="bit" />
         </EntityType>
         <EntityType Name="InfluencingEquipment">
           <Key>
@@ -246,6 +261,7 @@
           <Property Name="ApnuId" Type="int" />
           <Property Name="ArpmId" Type="int" />
           <Property Name="AosnId" Type="int" />
+          <Property Name="DarId" Type="int" />
           <Property Name="ConditionsId" Type="int" />
           <Property Name="FrequencyPowerFlowId" Type="int" />
           <Property Name="Using" Type="bit" />
@@ -488,6 +504,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DAR_BranchGroup_fk">
+          <End Role="BranchGroup" Type="Self.BranchGroup" Multiplicity="0..1" />
+          <End Role="DAR" Type="Self.DAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BranchGroup">
+              <PropertyRef Name="Uid" />
+            </Principal>
+            <Dependent Role="DAR">
+              <PropertyRef Name="BranchGroupUid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DAR_Seasons_fk">
+          <End Role="Seasons" Type="Self.Seasons" Multiplicity="0..1" />
+          <End Role="DAR" Type="Self.DAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DAR">
+              <PropertyRef Name="SeasonsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Disturbances_BranchGroup_fk">
           <End Role="BranchGroup" Type="Self.BranchGroup" Multiplicity="0..1" />
           <End Role="Disturbances" Type="Self.Disturbances" Multiplicity="*" />
@@ -535,6 +575,18 @@
             </Principal>
             <Dependent Role="EquipmentVsInfluencingEquipment">
               <PropertyRef Name="InfluencingEquipmentUid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FrequencyPowerFlow_Conditions_fk">
+          <End Role="Conditions" Type="Self.Conditions" Multiplicity="0..1" />
+          <End Role="FrequencyPowerFlow" Type="Self.FrequencyPowerFlow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conditions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FrequencyPowerFlow">
+              <PropertyRef Name="ConditionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -619,6 +671,18 @@
             </Principal>
             <Dependent Role="PostFaultConditions">
               <PropertyRef Name="ConditionsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PostFaultConditions_DAR_fk">
+          <End Role="DAR" Type="Self.DAR" Multiplicity="0..1" />
+          <End Role="PostFaultConditions" Type="Self.PostFaultConditions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DAR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostFaultConditions">
+              <PropertyRef Name="DarId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -774,6 +838,7 @@
           <EntitySet Name="BranchGroupScheme" EntityType="Self.BranchGroupScheme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BranchGroupVsBranchGroupScheme" EntityType="Self.BranchGroupVsBranchGroupScheme" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Conditions" EntityType="Self.Conditions" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DAR" EntityType="Self.DAR" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Disturbances" EntityType="Self.Disturbances" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Equipment" EntityType="Self.Equipment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="EquipmentVsInfluencingEquipment" EntityType="Self.EquipmentVsInfluencingEquipment" Schema="dbo" store:Type="Tables" />
@@ -846,6 +911,14 @@
             <End Role="BranchGroup" EntitySet="BranchGroup" />
             <End Role="Conditions" EntitySet="Conditions" />
           </AssociationSet>
+          <AssociationSet Name="DAR_BranchGroup_fk" Association="Self.DAR_BranchGroup_fk">
+            <End Role="BranchGroup" EntitySet="BranchGroup" />
+            <End Role="DAR" EntitySet="DAR" />
+          </AssociationSet>
+          <AssociationSet Name="DAR_Seasons_fk" Association="Self.DAR_Seasons_fk">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="DAR" EntitySet="DAR" />
+          </AssociationSet>
           <AssociationSet Name="Disturbances_BranchGroup_fk" Association="Self.Disturbances_BranchGroup_fk">
             <End Role="BranchGroup" EntitySet="BranchGroup" />
             <End Role="Disturbances" EntitySet="Disturbances" />
@@ -861,6 +934,10 @@
           <AssociationSet Name="EquipmentVsInfluencingEquipment_InfluencingEquipment_fk" Association="Self.EquipmentVsInfluencingEquipment_InfluencingEquipment_fk">
             <End Role="InfluencingEquipment" EntitySet="InfluencingEquipment" />
             <End Role="EquipmentVsInfluencingEquipment" EntitySet="EquipmentVsInfluencingEquipment" />
+          </AssociationSet>
+          <AssociationSet Name="FrequencyPowerFlow_Conditions_fk" Association="Self.FrequencyPowerFlow_Conditions_fk">
+            <End Role="Conditions" EntitySet="Conditions" />
+            <End Role="FrequencyPowerFlow" EntitySet="FrequencyPowerFlow" />
           </AssociationSet>
           <AssociationSet Name="Management_ManagementTasks_fk" Association="Self.Management_ManagementTasks_fk">
             <End Role="ManagementTasks" EntitySet="ManagementTasks" />
@@ -888,6 +965,10 @@
           </AssociationSet>
           <AssociationSet Name="PostFaultConditions_Conditions_fk" Association="Self.PostFaultConditions_Conditions_fk">
             <End Role="Conditions" EntitySet="Conditions" />
+            <End Role="PostFaultConditions" EntitySet="PostFaultConditions" />
+          </AssociationSet>
+          <AssociationSet Name="PostFaultConditions_DAR_fk" Association="Self.PostFaultConditions_DAR_fk">
+            <End Role="DAR" EntitySet="DAR" />
             <End Role="PostFaultConditions" EntitySet="PostFaultConditions" />
           </AssociationSet>
           <AssociationSet Name="PostFaultConditions_Disturbances_fk" Association="Self.PostFaultConditions_Disturbances_fk">
@@ -953,6 +1034,7 @@
           <EntitySet Name="BranchGroupScheme" EntityType="ApfBaseModel.BranchGroupScheme" />
           <EntitySet Name="BranchGroupVsBranchGroupScheme" EntityType="ApfBaseModel.BranchGroupVsBranchGroupScheme" />
           <EntitySet Name="Conditions" EntityType="ApfBaseModel.Conditions" />
+          <EntitySet Name="DAR" EntityType="ApfBaseModel.DAR" />
           <EntitySet Name="Disturbances" EntityType="ApfBaseModel.Disturbances" />
           <EntitySet Name="Equipment" EntityType="ApfBaseModel.Equipment" />
           <EntitySet Name="EquipmentVsInfluencingEquipment" EntityType="ApfBaseModel.EquipmentVsInfluencingEquipment" />
@@ -1049,6 +1131,10 @@
             <End Role="BranchGroup" EntitySet="BranchGroup" />
             <End Role="Conditions" EntitySet="Conditions" />
           </AssociationSet>
+          <AssociationSet Name="DAR_BranchGroup_fk" Association="ApfBaseModel.DAR_BranchGroup_fk">
+            <End Role="BranchGroup" EntitySet="BranchGroup" />
+            <End Role="DAR" EntitySet="DAR" />
+          </AssociationSet>
           <AssociationSet Name="Disturbances_BranchGroup_fk" Association="ApfBaseModel.Disturbances_BranchGroup_fk">
             <End Role="BranchGroup" EntitySet="BranchGroup" />
             <End Role="Disturbances" EntitySet="Disturbances" />
@@ -1060,6 +1146,10 @@
           <AssociationSet Name="PreFaultConditions_BranchGroupVsBranchGroupScheme_fk" Association="ApfBaseModel.PreFaultConditions_BranchGroupVsBranchGroupScheme_fk">
             <End Role="BranchGroupVsBranchGroupScheme" EntitySet="BranchGroupVsBranchGroupScheme" />
             <End Role="PreFaultConditions" EntitySet="PreFaultConditions" />
+          </AssociationSet>
+          <AssociationSet Name="FrequencyPowerFlow_Conditions_fk" Association="ApfBaseModel.FrequencyPowerFlow_Conditions_fk">
+            <End Role="Conditions" EntitySet="Conditions" />
+            <End Role="FrequencyPowerFlow" EntitySet="FrequencyPowerFlow" />
           </AssociationSet>
           <AssociationSet Name="PostFaultConditions_Conditions_fk" Association="ApfBaseModel.PostFaultConditions_Conditions_fk">
             <End Role="Conditions" EntitySet="Conditions" />
@@ -1076,6 +1166,14 @@
           <AssociationSet Name="PreFaultConditions_VoltageConditions_fk" Association="ApfBaseModel.PreFaultConditions_VoltageConditions_fk">
             <End Role="Conditions" EntitySet="Conditions" />
             <End Role="PreFaultConditions" EntitySet="PreFaultConditions" />
+          </AssociationSet>
+          <AssociationSet Name="DAR_Seasons_fk" Association="ApfBaseModel.DAR_Seasons_fk">
+            <End Role="Seasons" EntitySet="Seasons" />
+            <End Role="DAR" EntitySet="DAR" />
+          </AssociationSet>
+          <AssociationSet Name="PostFaultConditions_DAR_fk" Association="ApfBaseModel.PostFaultConditions_DAR_fk">
+            <End Role="DAR" EntitySet="DAR" />
+            <End Role="PostFaultConditions" EntitySet="PostFaultConditions" />
           </AssociationSet>
           <AssociationSet Name="PostFaultConditions_Disturbances_fk" Association="ApfBaseModel.PostFaultConditions_Disturbances_fk">
             <End Role="Disturbances" EntitySet="Disturbances" />
@@ -1265,6 +1363,7 @@
           <NavigationProperty Name="BoundingElements" Relationship="ApfBaseModel.BoundingElements_BranchGroup_fk" FromRole="BranchGroup" ToRole="BoundingElements" />
           <NavigationProperty Name="BranchGroupVsBranchGroupScheme" Relationship="ApfBaseModel.BranchGroupVsBranchGroupScheme_BranchGroup_fk" FromRole="BranchGroup" ToRole="BranchGroupVsBranchGroupScheme" />
           <NavigationProperty Name="Conditions" Relationship="ApfBaseModel.Conditions_BranchGroup_fk" FromRole="BranchGroup" ToRole="Conditions" />
+          <NavigationProperty Name="DAR" Relationship="ApfBaseModel.DAR_BranchGroup_fk" FromRole="BranchGroup" ToRole="DAR" />
           <NavigationProperty Name="Disturbances" Relationship="ApfBaseModel.Disturbances_BranchGroup_fk" FromRole="BranchGroup" ToRole="Disturbances" />
         </EntityType>
         <EntityType Name="BranchGroupScheme">
@@ -1301,10 +1400,26 @@
           <Property Name="MinValue" Type="Double" />
           <Property Name="MaxValue" Type="Double" />
           <NavigationProperty Name="BranchGroup" Relationship="ApfBaseModel.Conditions_BranchGroup_fk" FromRole="Conditions" ToRole="BranchGroup" />
+          <NavigationProperty Name="FrequencyPowerFlow" Relationship="ApfBaseModel.FrequencyPowerFlow_Conditions_fk" FromRole="Conditions" ToRole="FrequencyPowerFlow" />
           <NavigationProperty Name="PostFaultConditions" Relationship="ApfBaseModel.PostFaultConditions_Conditions_fk" FromRole="Conditions" ToRole="PostFaultConditions" />
           <NavigationProperty Name="PreFaultConditionsCurrent" Relationship="ApfBaseModel.PreFaultConditions_CurrentConditions_fk" FromRole="Conditions" ToRole="PreFaultConditions" />
           <NavigationProperty Name="PreFaultConditionsStatic" Relationship="ApfBaseModel.PreFaultConditions_StaticConditions_fk" FromRole="Conditions" ToRole="PreFaultConditions" />
           <NavigationProperty Name="PreFaultConditionsVoltage" Relationship="ApfBaseModel.PreFaultConditions_VoltageConditions_fk" FromRole="Conditions" ToRole="PreFaultConditions" />
+        </EntityType>
+        <EntityType Name="DAR">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BranchGroupUid" Type="Guid" />
+          <Property Name="SeasonsId" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="FormalName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ControlValuePowerFlow" Type="Double" />
+          <Property Name="Coefficient" Type="Double" />
+          <NavigationProperty Name="BranchGroup" Relationship="ApfBaseModel.DAR_BranchGroup_fk" FromRole="DAR" ToRole="BranchGroup" />
+          <NavigationProperty Name="Seasons" Relationship="ApfBaseModel.DAR_Seasons_fk" FromRole="DAR" ToRole="Seasons" />
+          <NavigationProperty Name="PostFaultConditions" Relationship="ApfBaseModel.PostFaultConditions_DAR_fk" FromRole="DAR" ToRole="PostFaultConditions" />
         </EntityType>
         <EntityType Name="Disturbances">
           <Key>
@@ -1343,10 +1458,14 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConditionId" Type="Int32" />
           <Property Name="PowerConsumptionFactor" Type="Double" />
           <Property Name="PowerConsumptionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="MinValue" Type="Double" />
           <Property Name="MaxValue" Type="Double" />
+          <Property Name="Normal" Type="Boolean" />
+          <Property Name="Verification" Type="Boolean" />
+          <NavigationProperty Name="Conditions" Relationship="ApfBaseModel.FrequencyPowerFlow_Conditions_fk" FromRole="FrequencyPowerFlow" ToRole="Conditions" />
           <NavigationProperty Name="PostFaultConditions" Relationship="ApfBaseModel.PostFaultConditions_FrequencyPowerFlow_fk" FromRole="FrequencyPowerFlow" ToRole="PostFaultConditions" />
         </EntityType>
         <EntityType Name="InfluencingEquipment">
@@ -1404,6 +1523,7 @@
           <Property Name="ApnuId" Type="Int32" />
           <Property Name="ArpmId" Type="Int32" />
           <Property Name="AosnId" Type="Int32" />
+          <Property Name="DarId" Type="Int32" />
           <Property Name="ConditionsId" Type="Int32" />
           <Property Name="FrequencyPowerFlowId" Type="Int32" />
           <Property Name="Using" Type="Boolean" />
@@ -1419,6 +1539,7 @@
           <NavigationProperty Name="ARPM" Relationship="ApfBaseModel.PostFaultConditions_ARPM_fk" FromRole="PostFaultConditions" ToRole="ARPM" />
           <NavigationProperty Name="BoundingElements" Relationship="ApfBaseModel.PostFaultConditions_BoundingElements_fk" FromRole="PostFaultConditions" ToRole="BoundingElements" />
           <NavigationProperty Name="Conditions" Relationship="ApfBaseModel.PostFaultConditions_Conditions_fk" FromRole="PostFaultConditions" ToRole="Conditions" />
+          <NavigationProperty Name="DAR" Relationship="ApfBaseModel.PostFaultConditions_DAR_fk" FromRole="PostFaultConditions" ToRole="DAR" />
           <NavigationProperty Name="Disturbances" Relationship="ApfBaseModel.PostFaultConditions_Disturbances_fk" FromRole="PostFaultConditions" ToRole="Disturbances" />
           <NavigationProperty Name="FrequencyPowerFlow" Relationship="ApfBaseModel.PostFaultConditions_FrequencyPowerFlow_fk" FromRole="PostFaultConditions" ToRole="FrequencyPowerFlow" />
           <NavigationProperty Name="PreFaultConditions" Relationship="ApfBaseModel.PostFaultConditions_PreFaultConditions_fk" FromRole="PostFaultConditions" ToRole="PreFaultConditions" />
@@ -1468,6 +1589,7 @@
           <NavigationProperty Name="AOSN" Relationship="ApfBaseModel.AOSN_Seasons_fk" FromRole="Seasons" ToRole="AOSN" />
           <NavigationProperty Name="APNU" Relationship="ApfBaseModel.APNU_Seasons_fk" FromRole="Seasons" ToRole="APNU" />
           <NavigationProperty Name="ARPM" Relationship="ApfBaseModel.ARPM_Seasons_fk" FromRole="Seasons" ToRole="ARPM" />
+          <NavigationProperty Name="DAR" Relationship="ApfBaseModel.DAR_Seasons_fk" FromRole="Seasons" ToRole="DAR" />
           <NavigationProperty Name="PreFaultConditions" Relationship="ApfBaseModel.PreFaultConditions_Seasons_fk" FromRole="Seasons" ToRole="PreFaultConditions" />
         </EntityType>
         <EntityType Name="Temperature">
@@ -1741,6 +1863,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="DAR_BranchGroup_fk">
+          <End Type="ApfBaseModel.BranchGroup" Role="BranchGroup" Multiplicity="0..1" />
+          <End Type="ApfBaseModel.DAR" Role="DAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BranchGroup">
+              <PropertyRef Name="Uid" />
+            </Principal>
+            <Dependent Role="DAR">
+              <PropertyRef Name="BranchGroupUid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="Disturbances_BranchGroup_fk">
           <End Type="ApfBaseModel.BranchGroup" Role="BranchGroup" Multiplicity="0..1" />
           <End Type="ApfBaseModel.Disturbances" Role="Disturbances" Multiplicity="*" />
@@ -1778,6 +1912,18 @@
             </Principal>
             <Dependent Role="PreFaultConditions">
               <PropertyRef Name="BranchGroupVsBranchGroupSchemeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FrequencyPowerFlow_Conditions_fk">
+          <End Type="ApfBaseModel.Conditions" Role="Conditions" Multiplicity="0..1" />
+          <End Type="ApfBaseModel.FrequencyPowerFlow" Role="FrequencyPowerFlow" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Conditions">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="FrequencyPowerFlow">
+              <PropertyRef Name="ConditionId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1826,6 +1972,30 @@
             </Principal>
             <Dependent Role="PreFaultConditions">
               <PropertyRef Name="ConditionsVoltageId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DAR_Seasons_fk">
+          <End Type="ApfBaseModel.Seasons" Role="Seasons" Multiplicity="0..1" />
+          <End Type="ApfBaseModel.DAR" Role="DAR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seasons">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DAR">
+              <PropertyRef Name="SeasonsId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="PostFaultConditions_DAR_fk">
+          <End Type="ApfBaseModel.DAR" Role="DAR" Multiplicity="0..1" />
+          <End Type="ApfBaseModel.PostFaultConditions" Role="PostFaultConditions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DAR">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="PostFaultConditions">
+              <PropertyRef Name="DarId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2115,6 +2285,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DAR">
+            <EntityTypeMapping TypeName="ApfBaseModel.DAR">
+              <MappingFragment StoreEntitySet="DAR">
+                <ScalarProperty Name="Coefficient" ColumnName="Coefficient" />
+                <ScalarProperty Name="ControlValuePowerFlow" ColumnName="ControlValuePowerFlow" />
+                <ScalarProperty Name="FormalName" ColumnName="FormalName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SeasonsId" ColumnName="SeasonsId" />
+                <ScalarProperty Name="BranchGroupUid" ColumnName="BranchGroupUid" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Disturbances">
             <EntityTypeMapping TypeName="ApfBaseModel.Disturbances">
               <MappingFragment StoreEntitySet="Disturbances">
@@ -2147,10 +2330,13 @@
           <EntitySetMapping Name="FrequencyPowerFlow">
             <EntityTypeMapping TypeName="ApfBaseModel.FrequencyPowerFlow">
               <MappingFragment StoreEntitySet="FrequencyPowerFlow">
+                <ScalarProperty Name="Verification" ColumnName="Verification" />
+                <ScalarProperty Name="Normal" ColumnName="Normal" />
                 <ScalarProperty Name="MaxValue" ColumnName="MaxValue" />
                 <ScalarProperty Name="MinValue" ColumnName="MinValue" />
                 <ScalarProperty Name="PowerConsumptionName" ColumnName="PowerConsumptionName" />
                 <ScalarProperty Name="PowerConsumptionFactor" ColumnName="PowerConsumptionFactor" />
+                <ScalarProperty Name="ConditionId" ColumnName="ConditionId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2207,6 +2393,7 @@
                 <ScalarProperty Name="Using" ColumnName="Using" />
                 <ScalarProperty Name="FrequencyPowerFlowId" ColumnName="FrequencyPowerFlowId" />
                 <ScalarProperty Name="ConditionsId" ColumnName="ConditionsId" />
+                <ScalarProperty Name="DarId" ColumnName="DarId" />
                 <ScalarProperty Name="AosnId" ColumnName="AosnId" />
                 <ScalarProperty Name="ArpmId" ColumnName="ArpmId" />
                 <ScalarProperty Name="ApnuId" ColumnName="ApnuId" />

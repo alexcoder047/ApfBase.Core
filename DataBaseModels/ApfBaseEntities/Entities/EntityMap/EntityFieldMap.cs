@@ -800,6 +800,116 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                 }
                             },
                             #endregion ARPM
+                            #region DAR
+                            {
+                                typeof(DAR),
+                                new List<FieldDefinition>()
+                                {
+                                    new FieldDefinition()
+                                    {
+                                        Name = "Id",
+                                        FieldName = "Id",
+                                        DataType = typeof(int),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "BranchGroupUid",
+                                        FieldName = "BranchGroupUid",
+                                        DataType = typeof(Guid?),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "SeasonsId",
+                                        FieldName = "SeasonsId",
+                                        DataType = typeof(int?),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "Name",
+                                        FieldName = "Наименование",
+                                        DataType = typeof(string),
+                                        Index = 1,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "FormalName",
+                                        FieldName = "Формальное наименование",
+                                        DataType = typeof(string),
+                                        Index = 2,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "ControlValuePowerFlow",
+                                        FieldName = "Объём УВ",
+                                        DataType = typeof(double?),
+                                        Index = 3,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "Coefficient",
+                                        FieldName = "Коэффициент",
+                                        DataType = typeof(double?),
+                                        Index = 4,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "BranchGroup",
+                                        FieldName = "BranchGroup",
+                                        DataType = typeof(BranchGroup),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "Seasons",
+                                        FieldName = "Seasons",
+                                        DataType = typeof(Seasons),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "PostFaultConditions",
+                                        FieldName = "PostFaultConditions",
+                                        DataType = typeof(ICollection<PostFaultConditions>),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "BranchGroupProxy",
+                                        FieldName = "Сечения",
+                                        DataType = typeof(Guid?),
+                                        Index = 5,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "SeasonsProxy",
+                                        FieldName = "Сезон",
+                                        DataType = typeof(int?),
+                                        Index = 6,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    }
+                                }
+                            },
+                            #endregion DAR
                             #region BoundingElements
                             {
                                 typeof(BoundingElements),
@@ -953,6 +1063,14 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "ARPM",
                                         FieldName = "ARPM",
                                         DataType = typeof(ICollection<ARPM>),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "DAR",
+                                        FieldName = "DAR",
+                                        DataType = typeof(ICollection<DAR>),
                                         Visible = false,
                                         IsReadOnly = true
                                     },
@@ -1153,6 +1271,14 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "PreFaultConditionsVoltage",
                                         FieldName = "PreFaultConditionsVoltage",
                                         DataType = typeof(ICollection<PreFaultConditions>),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "FrequencyPowerFlow",
+                                        FieldName = "FrequencyPowerFlow",
+                                        DataType = typeof(ICollection<FrequencyPowerFlow>),
                                         Visible = false,
                                         IsReadOnly = true
                                     },
@@ -1367,10 +1493,36 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                     },
                                     new FieldDefinition()
                                     {
+                                        Name = "ConditionId",
+                                        FieldName = "ConditionId",
+                                        DataType = typeof(int),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "Normal",
+                                        FieldName = "Доп. критерий",
+                                        DataType = typeof(bool?),
+                                        Index = 1,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "Verification",
+                                        FieldName = "Проверка Pнб > 50%",
+                                        DataType = typeof(bool?),
+                                        Index = 2,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
                                         Name = "PowerConsumptionFactor",
                                         FieldName = "Коэффициент потребления",
                                         DataType = typeof(double?),
-                                        Index = 1,
+                                        Index = 3,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -1379,7 +1531,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "PowerConsumptionName",
                                         FieldName = "Наименование",
                                         DataType = typeof(string),
-                                        Index = 2,
+                                        Index = 4,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -1388,7 +1540,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "MinValue",
                                         FieldName = "Минимальное значение",
                                         DataType = typeof(double?),
-                                        Index = 3,
+                                        Index = 5,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -1397,9 +1549,17 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "MaxValue",
                                         FieldName = "Максимальное значение",
                                         DataType = typeof(double?),
-                                        Index = 4,
+                                        Index = 6,
                                         Visible = true,
                                         IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "Conditions",
+                                        FieldName = "Conditions",
+                                        DataType = typeof(Conditions),
+                                        Visible = false,
+                                        IsReadOnly = true
                                     },
                                     new FieldDefinition()
                                     {
@@ -1414,9 +1574,18 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "FrequencyFormalNameProxy",
                                         FieldName = "Формальное наименование",
                                         DataType = typeof(string),
-                                        Index = 6,
+                                        Index = 7,
                                         Visible = true,
                                         IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "ConditionsProxy",
+                                        FieldName = "Переменные",
+                                        DataType = typeof(Conditions),
+                                        Index = 8,
+                                        Visible = true,
+                                        IsReadOnly = false
                                     }
                                 }
                             },
@@ -1982,6 +2151,14 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                     },
                                     new FieldDefinition()
                                     {
+                                        Name = "DarId",
+                                        FieldName = "DarId",
+                                        DataType = typeof(int?),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
                                         Name = "ConditionsId",
                                         FieldName = "ConditionsId",
                                         DataType = typeof(int?),
@@ -2124,10 +2301,19 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                     },
                                     new FieldDefinition()
                                     {
+                                        Name = "DARProxy",
+                                        FieldName = "ДАР",
+                                        DataType = typeof(int?),
+                                        Index = 15,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
                                         Name = "Comment",
                                         FieldName = "Комментарий",
                                         DataType = typeof(string),
-                                        Index = 15,
+                                        Index = 16,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -2160,6 +2346,14 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "ARPM",
                                         FieldName = "ARPM",
                                         DataType = typeof(ARPM),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "DAR",
+                                        FieldName = "DAR",
+                                        DataType = typeof(DAR),
                                         Visible = false,
                                         IsReadOnly = true
                                     },
@@ -2257,6 +2451,14 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "ARPM",
                                         FieldName = "ARPM",
                                         DataType = typeof(ICollection<ARPM>),
+                                        Visible = false,
+                                        IsReadOnly = true
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "DAR",
+                                        FieldName = "DAR",
+                                        DataType = typeof(ICollection<DAR>),
                                         Visible = false,
                                         IsReadOnly = true
                                     },

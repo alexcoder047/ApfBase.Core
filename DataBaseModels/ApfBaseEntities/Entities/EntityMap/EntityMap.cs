@@ -77,6 +77,10 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                     typeof(AOSN), 
                     ("АОСН", "Автоматика", false) 
                 },
+                {
+                    typeof(DAR),
+                    ("ДАР", "Автоматика", false)
+                },
                 { 
                     typeof(Management), 
                     ("Руководство", "Администрирование", false) 

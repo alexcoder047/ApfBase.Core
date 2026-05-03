@@ -25,6 +25,7 @@ namespace DataBaseModels.ApfBaseEntities
             this.BoundingElements = new HashSet<BoundingElements>();
             this.BranchGroupVsBranchGroupScheme = new HashSet<BranchGroupVsBranchGroupScheme>();
             this.Conditions = new HashSet<Conditions>();
+            this.DAR = new HashSet<DAR>();
             this.Disturbances = new HashSet<Disturbances>();
         }
     
@@ -49,6 +50,8 @@ namespace DataBaseModels.ApfBaseEntities
         public virtual ICollection<BranchGroupVsBranchGroupScheme> BranchGroupVsBranchGroupScheme { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Conditions> Conditions { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DAR> DAR { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Disturbances> Disturbances { get; set; }
     }
