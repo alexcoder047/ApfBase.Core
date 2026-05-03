@@ -1,10 +1,9 @@
 ﻿using ApfBuilder.Context;
-using ApfBuilder.Criteria.Core.Interfaces;
 using ApfBuilder.Criteria.Core;
+using ApfBuilder.Criteria.Core.Interfaces;
+using ApfBuilder.Criteria.Extension;
 using ApfBuilder.Services;
 using System.Linq;
-using System;
-using ApfBuilder.Criteria.Extension;
 
 namespace ApfBuilder.Criteria
 {
