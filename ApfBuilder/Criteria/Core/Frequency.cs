@@ -2,6 +2,7 @@
 using ApfBuilder.Services;
 using DataBaseModels.ApfBaseEntities;
 using Exceptions.ApfBuilder;
+using Extensions;
 using System;
 using System.Collections.Generic;
 using static ApfBuilder.Criteria.CriterionAttribute;
@@ -15,6 +16,8 @@ namespace ApfBuilder.Criteria.Core
              => new Frequency(postF);
 
         public override CriterionType Type => CriterionType.Frequency;
+
+        public bool? CanUse { get; }
 
         public (string Value, string Description) FullValue { get; }
 
@@ -30,7 +33,14 @@ namespace ApfBuilder.Criteria.Core
 
         public double? MaxValueER { get; }
 
-        private Frequency(PostFaultConditions postF) : base()
+        private Frequency(PostFaultConditions postF) 
+            : base
+            (
+                  postF.PreFaultConditions
+                        ?.BranchGroupVsBranchGroupScheme
+                        ?.BranchGroup
+                        ?.RoundValue
+            )
         {
             try
             {
@@ -38,12 +48,17 @@ namespace ApfBuilder.Criteria.Core
                 FrequencyPowerFlow = postF.FrequencyPowerFlow;
                 Disturbance = postF.Disturbances;
                 EmergencyResponse = EmergencyResponseHandler.
-                    ProcessHandler(base.RoundValue, this.Type, postF.APNU, postF.DAR);
+                    ProcessHandler(
+                        base.RoundValue, this.Type, postF.APNU, postF.DAR);
+
+                CanUse = FrequencyPowerFlow?.Normal == true;
 
                 Name = FrequencyPowerFlow?.PowerConsumptionName;
                 Value = FrequencyPowerFlow?.PowerConsumptionFactor;
-                MinValue = Value * FrequencyPowerFlow?.MinValue;
-                MaxValue = Value * FrequencyPowerFlow?.MaxValue;
+                MinValue = (Value * FrequencyPowerFlow?.MinValue)
+                    .Round(base.RoundValue);
+                MaxValue = (Value * FrequencyPowerFlow?.MaxValue)
+                    .Round(base.RoundValue);
 
                 MinValueER = MinValue;
                 MaxValueER = MaxValue;

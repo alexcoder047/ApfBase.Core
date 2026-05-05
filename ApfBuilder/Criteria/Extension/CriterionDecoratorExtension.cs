@@ -31,5 +31,23 @@ namespace ApfBuilder.Criteria.Extension
 
             return Attribute.IsDefined(t, typeof(TAttr), inherit);
         }
+
+        public static T AsInner<T>(this ICriterion criterion) where T : class
+        {
+            while (criterion != null)
+            {
+                if (criterion is T target) return target;
+
+                if (criterion is ICriterionDecorator decorator)
+                {
+                    criterion = decorator.Inner;
+                    continue;
+                }
+
+                return null;
+            }
+
+            return null;
+        }
     }
 }

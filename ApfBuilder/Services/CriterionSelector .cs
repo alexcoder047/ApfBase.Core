@@ -8,26 +8,31 @@ namespace ApfBuilder.Services
 {
     public class CriterionSelector
     {
-        public static IEnumerable<ICriterion> SimpleSelector(
+        public static IEnumerable<ICriterion> NotNullDetectSelector(
             IEnumerable<ICriterion> criteriaList, 
                 Func<ICriterion, double?> compare) 
                     => criteriaList.Where(c => compare(c) != null);
 
-        public static IEnumerable<ICriterion> ComplexSelector(
-            IEnumerable<ICriterion[]> 
-            criteriaList)
+        public static IEnumerable<ICriterion> MinDetectSelector(
+            IEnumerable<ICriterion[]> criteriaList, 
+                Func<ICriterion, double?> compare)
         {
             foreach (var criteria in criteriaList)
             {
                 var correctCriteria = criteria.Where(
-                    c => c.Value != null).ToList();
+                    c => compare(c) != null).ToList();
 
                 if (!correctCriteria.Any()) continue;
 
-                var minCriterion = correctCriteria.Min(c => c.Value);
+                var minCriterion = correctCriteria.Min(c => compare(c));
 
                 yield return minCriterion;
             }
         }
+
+        public static IEnumerable<ICriterion> UsageSelector(
+            IEnumerable<ICriterion> criteriaList,
+                Func<ICriterion, bool?> compare) 
+                    => criteriaList.Where(c => compare(c) == true);
     }
 }
