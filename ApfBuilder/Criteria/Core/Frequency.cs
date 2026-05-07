@@ -25,8 +25,6 @@ namespace ApfBuilder.Criteria.Core
 
         public Conditions Condition { get; }
 
-        public FrequencyPowerFlow FrequencyPowerFlow { get; }
-
         public Disturbances Disturbance { get; }
 
         public double? MinValueER { get; }
@@ -45,19 +43,18 @@ namespace ApfBuilder.Criteria.Core
             try
             {
                 Condition = postF.Conditions;
-                FrequencyPowerFlow = postF.FrequencyPowerFlow;
                 Disturbance = postF.Disturbances;
                 EmergencyResponse = EmergencyResponseHandler.
                     ProcessHandler(
                         base.RoundValue, this.Type, postF.APNU, postF.DAR);
 
-                CanUse = FrequencyPowerFlow?.Normal == true;
+                CanUse = postF.FrequencyPowerFlow?.Normal == true;
 
-                Name = FrequencyPowerFlow?.PowerConsumptionName;
-                Value = FrequencyPowerFlow?.PowerConsumptionFactor;
-                MinValue = (Value * FrequencyPowerFlow?.MinValue)
+                Name = postF.FrequencyPowerFlow?.PowerConsumptionName;
+                Value = postF.FrequencyPowerFlow?.PowerConsumptionFactor;
+                MinValue = (Value * postF.FrequencyPowerFlow?.MinValue)
                     .Round(base.RoundValue);
-                MaxValue = (Value * FrequencyPowerFlow?.MaxValue)
+                MaxValue = (Value * postF.FrequencyPowerFlow?.MaxValue)
                     .Round(base.RoundValue);
 
                 MinValueER = MinValue;
@@ -74,10 +71,10 @@ namespace ApfBuilder.Criteria.Core
 
                 FullValue =
                 (
-                    $"{FrequencyPowerFlow?.FrequencyFormalNameProxy}" +
+                    $"{postF.FrequencyPowerFlow?.FrequencyFormalNameProxy}" +
                     (postF?.PreFaultConditions?.IrOscExpressions != null ?
                     " - ΔPнк" : ""),
-                    $"{FrequencyPowerFlow?.PowerConsumptionFactor * 100}" +
+                    $"{postF.FrequencyPowerFlow?.PowerConsumptionFactor * 100}" +
                     $"% {Name}" +
                     (postF?.PreFaultConditions?.IrOscExpressions != null ?
                     " - ΔPнк" : "")
