@@ -2,11 +2,9 @@
 
 namespace ApfBuilder.Criteria.Core.Interfaces
 {
-    public interface IFrequencyCriterion : ICriterion
+    public interface IFrequencyCriterion : IAdditionalCriterion
     {
         (string Value, string Description) FullValue { get; }
-
-        FrequencyPowerFlow FrequencyPowerFlow { get; }
 
         Disturbances Disturbance { get; }
     }

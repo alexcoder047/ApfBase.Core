@@ -40,7 +40,7 @@ namespace ApfBuilder.Criteria
             var additionalCriteria =
                 CriterionSelector
                 .UsageSelector(byCase[CriterionCase.Additional],
-                    x => x.AsInner<IFrequencyCriterion>()?.CanUse);
+                    x => x.AsInner<IAdditionalCriterion>()?.CanUse);
 
             Criteria = baseStateCriteria
                 .Concat(forcedStateCriteria)
