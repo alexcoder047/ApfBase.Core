@@ -10,16 +10,18 @@ using static ApfBuilder.Criteria.CriterionAttribute;
 namespace ApfBuilder.Criteria.Core
 {
     [AdditionalAPF]
-    public sealed class Frequency : CriterionBase, IEmergencyResponseCriterion
+    public sealed class VerificationCriterion : CriterionBase, IEmergencyResponseCriterion
     {
         public static ICriterion Create(PostFaultConditions postF)
-             => new Frequency(postF);
+            => new VerificationCriterion(postF);
 
-        public override CriterionType Type => CriterionType.Frequency;
+        public override CriterionType Type => CriterionType.Verification;
 
-        public bool? CanUse { get; }
+        public Static StaticCriterion { get; }
 
-        public (string Value, string Description) FullValue { get; }
+        public double? LimitPowerFlow { get; }
+
+        public int? IrOscExpressions { get; }
 
         public IEnumerable<IEmergencyResponse> EmergencyResponse { get; }
 
@@ -27,13 +29,13 @@ namespace ApfBuilder.Criteria.Core
 
         public Disturbances Disturbance { get; }
 
-        public int? IrOscExpressions { get; }
+        public FrequencyPowerFlow FrequencyCriterion { get; }
 
         public double? MinValueER { get; }
 
         public double? MaxValueER { get; }
 
-        private Frequency(PostFaultConditions postF) 
+        private VerificationCriterion(PostFaultConditions postF)
             : base
             (
                   postF.PreFaultConditions
@@ -44,12 +46,14 @@ namespace ApfBuilder.Criteria.Core
         {
             try
             {
-                CanUse = postF?.FrequencyPowerFlow?.Using == true;
+                FrequencyCriterion = postF?.FrequencyPowerFlow;
 
-                Condition = postF?.FrequencyPowerFlow?.Conditions;
+                StaticCriterion = (Static)Static.Create(postF);
+                LimitPowerFlow = postF?.PreFaultConditions?.LimitPowerFlow;
+                IrOscExpressions = postF.PreFaultConditions?.IrOscExpressions;
+
+                Condition = postF?.Conditions;
                 Disturbance = postF.Disturbances;
-                IrOscExpressions = 
-                    postF?.PreFaultConditions?.IrOscExpressions;
                 EmergencyResponse = EmergencyResponseHandler.
                     ProcessHandler(
                         base.RoundValue, this.Type, postF.APNU, postF.DAR);
@@ -72,13 +76,6 @@ namespace ApfBuilder.Criteria.Core
                     ComplexMaxValue += e.MaxValue;
                     ComplexMinValue += e.MinValue;
                 }
-
-                FullValue =
-                (
-                    $"{postF.FrequencyPowerFlow?.FrequencyFormalNameProxy}",
-                    $"{postF.FrequencyPowerFlow?.PowerConsumptionFactor * 100}" +
-                    $"% {Name}"
-                );
             }
             catch (Exception ex)
             {

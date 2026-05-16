@@ -42,7 +42,7 @@ namespace DataBaseModels.ApfBaseEntities
         public virtual Conditions Conditions { get; set; }
         public virtual DAR DAR { get; set; }
         public virtual Disturbances Disturbances { get; set; }
-        public virtual FrequencyPowerFlow FrequencyPowerFlow { get; set; }
         public virtual PreFaultConditions PreFaultConditions { get; set; }
+        public virtual FrequencyPowerFlow FrequencyPowerFlow { get; set; }
     }
 }

@@ -26,8 +26,7 @@ namespace DataBaseModels.ApfBaseEntities
         public string PowerConsumptionName { get; set; }
         public Nullable<double> MinValue { get; set; }
         public Nullable<double> MaxValue { get; set; }
-        public Nullable<bool> Normal { get; set; }
-        public Nullable<bool> Verification { get; set; }
+        public Nullable<bool> Using { get; set; }
     
         public virtual Conditions Conditions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

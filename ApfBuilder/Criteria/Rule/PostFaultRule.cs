@@ -44,7 +44,12 @@ namespace ApfBuilder.Criteria.Rule
                 Cases(CriterionCase.Additional),
                 pf => true,
                 false,
-                Frequency.Create)
+                Frequency.Create),
+            new PostFaultRule(
+                Cases(CriterionCase.Additional),
+                pf => true,
+                false,
+                VerificationCriterion.Create)
             #endregion rules
         };
 

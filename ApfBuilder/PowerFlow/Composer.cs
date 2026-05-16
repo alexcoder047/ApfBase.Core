@@ -1,5 +1,6 @@
-﻿using ApfBuilder.Criteria.Core.Interfaces;
+﻿using DataBaseModels.ApfBaseEntities;
 using MoreLinq;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace ApfBuilder.PowerFlow
@@ -21,20 +22,19 @@ namespace ApfBuilder.PowerFlow
 
         protected (string Value, string Description) EmergencyResponseCompose(
             string value, string description, 
-            IEmergencyResponseCriterion emergencyCriterion)
+            IEnumerable<IEmergencyResponse> emergencyResponce, 
+            string symbol = " + ")
         {
             string responce = string.Empty;
-            emergencyCriterion.EmergencyResponse.ForEach(
-                (x) => responce += " + " + x.Description
+            emergencyResponce.ForEach(
+                (x) => responce += symbol + x.Description
                 );
 
             value +=
-                (emergencyCriterion.EmergencyResponse.Any() ?
-                responce : "");
+                (emergencyResponce.Any() ? responce : "");
 
             description +=
-                (emergencyCriterion.EmergencyResponse.Any() ?
-                "+ УВ" : "");
+                (emergencyResponce.Any() ? "+ УВ" : "");
 
             return (value, description);
         }

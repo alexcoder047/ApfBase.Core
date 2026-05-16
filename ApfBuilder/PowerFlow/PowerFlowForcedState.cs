@@ -60,7 +60,7 @@ namespace ApfBuilder.PowerFlow
                         $", ПАР {complexCriterion.Disturbance.Number}" : "");
 
                     (Value, Description) = EmergencyResponseCompose(
-                        Value, Description, complexCriterion
+                        Value, Description, complexCriterion.EmergencyResponse
                         );
 
                     Value = TerminateLine(Value);

@@ -22,6 +22,9 @@ namespace ApfBuilder.Criteria.Core
         [EnumMember(Value = "Frequency")]
         Frequency,
 
+        [EnumMember(Value = "VerificationCriterion")]
+        Verification,
+
         [EnumMember(Value = "CurrentSecondary")]
         CurrentSecondary,
 

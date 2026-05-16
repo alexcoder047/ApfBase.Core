@@ -22,7 +22,6 @@
         <EntityTypeShape EntityType="ApfBaseModel.Disturbances" Width="1.5" PointX="3" PointY="51.75" />
         <EntityTypeShape EntityType="ApfBaseModel.Equipment" Width="1.5" PointX="6" PointY="44.25" />
         <EntityTypeShape EntityType="ApfBaseModel.EquipmentVsInfluencingEquipment" Width="1.5" PointX="8.25" PointY="41.25" />
-        <EntityTypeShape EntityType="ApfBaseModel.FrequencyPowerFlow" Width="1.5" PointX="5.25" PointY="37.25" />
         <EntityTypeShape EntityType="ApfBaseModel.InfluencingEquipment" Width="1.5" PointX="6" PointY="41.25" />
         <EntityTypeShape EntityType="ApfBaseModel.Management" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="ApfBaseModel.ManagementTasks" Width="1.5" PointX="0.75" PointY="1.375" />
@@ -56,7 +55,6 @@
         <AssociationConnector Association="ApfBaseModel.Disturbances_BranchGroup_fk" />
         <AssociationConnector Association="ApfBaseModel.BranchGroupVsBranchGroupScheme_BranchGroupScheme_fk" />
         <AssociationConnector Association="ApfBaseModel.PreFaultConditions_BranchGroupVsBranchGroupScheme_fk" />
-        <AssociationConnector Association="ApfBaseModel.FrequencyPowerFlow_Conditions_fk" />
         <AssociationConnector Association="ApfBaseModel.PostFaultConditions_Conditions_fk" />
         <AssociationConnector Association="ApfBaseModel.PreFaultConditions_CurrentConditions_fk" />
         <AssociationConnector Association="ApfBaseModel.PreFaultConditions_StaticConditions_fk" />
@@ -66,12 +64,14 @@
         <AssociationConnector Association="ApfBaseModel.PostFaultConditions_Disturbances_fk" />
         <AssociationConnector Association="ApfBaseModel.EquipmentVsInfluencingEquipment_Equipment_fk" />
         <AssociationConnector Association="ApfBaseModel.EquipmentVsInfluencingEquipment_InfluencingEquipment_fk" />
-        <AssociationConnector Association="ApfBaseModel.PostFaultConditions_FrequencyPowerFlow_fk" />
         <AssociationConnector Association="ApfBaseModel.PreFaultConditions_InfluencingEquipment_fk" />
         <AssociationConnector Association="ApfBaseModel.Management_ManagementTasks_fk" />
         <AssociationConnector Association="ApfBaseModel.PostFaultConditions_PreFaultConditions_fk" />
         <AssociationConnector Association="ApfBaseModel.PreFaultConditions_Seasons_fk" />
         <AssociationConnector Association="ApfBaseModel.PreFaultConditions_Temperature_fk" />
+        <EntityTypeShape EntityType="ApfBaseModel.FrequencyPowerFlow" Width="2.125" PointX="5.25" PointY="37.375" />
+        <AssociationConnector Association="ApfBaseModel.FrequencyPowerFlow_Conditions_fk" />
+        <AssociationConnector Association="ApfBaseModel.PostFaultConditions_FrequencyPowerFlow_fk" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

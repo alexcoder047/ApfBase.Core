@@ -9,6 +9,9 @@ namespace DataBaseModels.ApfBaseEntities
     public partial class AOPO : IEntity, IEmergencyResponse
     {
         [Browsable(false)]
+        public object EmergencyInstance { get; set; }
+
+        [Browsable(false)]
         public double? Value { get; set; }
 
         [Browsable(false)]

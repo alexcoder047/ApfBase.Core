@@ -29,10 +29,5 @@ namespace ApfBuilder.Services
                 yield return minCriterion;
             }
         }
-
-        public static IEnumerable<ICriterion> UsageSelector(
-            IEnumerable<ICriterion> criteriaList,
-                Func<ICriterion, bool?> compare) 
-                    => criteriaList.Where(c => compare(c) == true);
     }
 }

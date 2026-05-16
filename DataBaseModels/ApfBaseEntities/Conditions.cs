@@ -17,11 +17,11 @@ namespace DataBaseModels.ApfBaseEntities
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Conditions()
         {
-            this.FrequencyPowerFlow = new HashSet<FrequencyPowerFlow>();
             this.PostFaultConditions = new HashSet<PostFaultConditions>();
             this.PreFaultConditionsCurrent = new HashSet<PreFaultConditions>();
             this.PreFaultConditionsStatic = new HashSet<PreFaultConditions>();
             this.PreFaultConditionsVoltage = new HashSet<PreFaultConditions>();
+            this.FrequencyPowerFlow = new HashSet<FrequencyPowerFlow>();
         }
     
         public int Id { get; set; }
@@ -30,10 +30,9 @@ namespace DataBaseModels.ApfBaseEntities
         public string FormalName { get; set; }
         public Nullable<double> MinValue { get; set; }
         public Nullable<double> MaxValue { get; set; }
+        public string ConditionReplacement { get; set; }
     
         public virtual BranchGroup BranchGroup { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<FrequencyPowerFlow> FrequencyPowerFlow { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PostFaultConditions> PostFaultConditions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -42,5 +41,7 @@ namespace DataBaseModels.ApfBaseEntities
         public virtual ICollection<PreFaultConditions> PreFaultConditionsStatic { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<PreFaultConditions> PreFaultConditionsVoltage { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<FrequencyPowerFlow> FrequencyPowerFlow { get; set; }
     }
 }

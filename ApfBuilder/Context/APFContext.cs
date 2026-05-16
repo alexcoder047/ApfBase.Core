@@ -94,6 +94,9 @@ namespace ApfBuilder.Context
             using (var dbContext = new ApfBaseContext(
                 DataBaseConnection.ConnectionString))
             {
+                dbContext.Configuration.LazyLoadingEnabled = false;
+                dbContext.Configuration.ProxyCreationEnabled = false;
+
                 var preFs = dbContext.PreFaultConditions
                     .Where(filter)
                     .Include(b => b.BranchGroupVsBranchGroupScheme
@@ -111,6 +114,8 @@ namespace ApfBuilder.Context
                     .Include(p => p.PostFaultConditions
                         .Select(pf => pf.AOSN))
                     .Include(p => p.PostFaultConditions
+                        .Select(pf => pf.DAR))
+                    .Include(p => p.PostFaultConditions
                         .Select(c => c.Conditions))
                     .Include(p => p.PostFaultConditions
                         .Select(pf => pf.BoundingElements))
@@ -118,6 +123,8 @@ namespace ApfBuilder.Context
                         .Select(pf => pf.Disturbances))
                     .Include(p => p.PostFaultConditions
                         .Select(pf => pf.FrequencyPowerFlow))
+                    .Include(p => p.PostFaultConditions
+                        .Select(pf => pf.FrequencyPowerFlow.Conditions))
                     .AsNoTracking()
                     .ToList();
 

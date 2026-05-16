@@ -1,5 +1,6 @@
 ﻿using ApfBuilder.Context;
 using ApfBuilder.Criteria.Core;
+using ApfBuilder.Criteria.Core.Helper;
 using ApfBuilder.Criteria.Core.Interfaces;
 using ApfBuilder.Criteria.Extension;
 using ApfBuilder.Services;
@@ -9,16 +10,17 @@ namespace ApfBuilder.Criteria
 {
     public class CriterionFactory : ICriterionFactory
     {
-        private readonly IAPFContext _context;
-
         public ICriterion[] Criteria { get; }
 
         public CriterionFactory(IAPFContext context)
         {
-            _context = context;
+            var built = CriterionBuilder.Build(context);
 
-            var built = CriterionBuilder.Build(_context);
+            Criteria = GetSelectedCriteria(built);
+        }
 
+        private ICriterion[] GetSelectedCriteria(CriterionBuilder built)
+        {
             var byCase = built.ByCase;
             var byComplexSelector = built.ByComplexSelector;
 
@@ -33,16 +35,27 @@ namespace ApfBuilder.Criteria
 
             var forcedStateCriteria =
                 CriterionSelector
-                .NotNullDetectSelector(byCase[CriterionCase.ForcedState], 
+                .NotNullDetectSelector(byCase[CriterionCase.ForcedState],
                     x => x.Value)
                 .ToArray();
 
             var additionalCriteria =
                 CriterionSelector
-                .UsageSelector(byCase[CriterionCase.Additional],
-                    x => x.AsInner<IAdditionalCriterion>()?.CanUse);
+                    .NotNullDetectSelector(byCase[CriterionCase.Additional],
+                        x => x.MaxValue)
+                    .Where(x =>
+                    {
+                        var frequency = x.AsInner<Frequency>();
+                        var verification = x.AsInner<VerificationCriterion>();
+                        
+                        return
+                            (frequency?.CanUse == true) ||
+                                VerificationCriterionHelper
+                                    .CanUse(verification);
+                    })
+                    .ToArray();
 
-            Criteria = baseStateCriteria
+            return baseStateCriteria
                 .Concat(forcedStateCriteria)
                 .Concat(additionalCriteria)
                 .DistinctByInner()
