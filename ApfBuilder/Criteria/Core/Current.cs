@@ -71,7 +71,8 @@ namespace ApfBuilder.Criteria.Core
                 Disturbance = postF.Disturbances;
                 Bounding = postF.BoundingElements;
                 EmergencyResponse = EmergencyResponseHandler.
-                    ProcessHandler(base.RoundValue, this.Type, postF.AOPO);
+                    ProcessHandler(base.RoundValue, this.Type, 
+                        postF.APNU, postF.AOPO);
 
                 MinValueER = MinValue;
                 MaxValueER = MaxValue;

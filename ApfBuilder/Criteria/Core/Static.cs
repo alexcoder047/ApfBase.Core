@@ -46,7 +46,8 @@ namespace ApfBuilder.Criteria.Core
                 Condition = postF.Conditions;
                 Disturbance = postF.Disturbances;
                 EmergencyResponse = EmergencyResponseHandler.
-                    ProcessHandler(base.RoundValue, this.Type, postF.APNU);
+                    ProcessHandler(base.RoundValue, this.Type, 
+                        postF.APNU, postF.ARPM);
 
                 MinValueER = MinValue;
                 MaxValueER = MaxValue;
