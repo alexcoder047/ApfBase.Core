@@ -2,6 +2,7 @@
 using DataBaseModels.ApfBaseEntities;
 using Extensions;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace ApfBuilder.Services
 {
@@ -13,7 +14,9 @@ namespace ApfBuilder.Services
             int? roundParam, CriterionType type, 
             params IEmergencyResponse[] emergencies)
         {
-            foreach (var emergency in emergencies)
+            EmergencyResponseFilter(emergencies, out var filterEmergencies);
+
+            foreach (var emergency in filterEmergencies)
             {
                 switch (emergency)
                 {
@@ -92,6 +95,22 @@ namespace ApfBuilder.Services
                         break;
                     default: break;
                 }
+            }
+        }
+
+        private static void EmergencyResponseFilter(
+            IEmergencyResponse[] emergencies, 
+            out IEmergencyResponse[] filterEmergencies)
+        {
+            filterEmergencies = emergencies;
+
+            if ((emergencies.Any(x => x is AOPO) &&
+                emergencies.Any(x => x is APNU)) ||
+                (emergencies.Any(x => x is APNU) &&
+                    emergencies.Any(x => x is ARPM)))
+            {
+                filterEmergencies = emergencies
+                    .Where(x => !(x is APNU)).ToArray();
             }
         }
 
