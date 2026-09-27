@@ -47,19 +47,5 @@ namespace ApfBuilder.Criteria.Extension
                             selectedCase);
                 });
         }
-
-        public static IEnumerable<ICriterion> DistinctByInner(
-            this IEnumerable<ICriterion> source)
-        {
-            var seen = new HashSet<ICriterion>(
-                ReferenceEqualityComparer<ICriterion>.Instance);
-
-            foreach (var criterion in source)
-            {
-                var inner = criterion.Unwrap();
-
-                if (seen.Add(inner)) yield return criterion;
-            }
-        }
     }
 }
