@@ -19,5 +19,7 @@
         CriterionType Type { get; }
 
         CriterionCase Case { get; }
+
+        CriterionCase SelectedCase { get; }
     }
 }

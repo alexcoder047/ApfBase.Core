@@ -22,6 +22,8 @@ namespace ApfBuilder.Criteria.Core
 
         public CriterionCase Case => CriterionCase.None;
 
+        public CriterionCase SelectedCase => CriterionCase.None;
+
         public abstract CriterionType Type { get; }
 
         protected CriterionBase() { }

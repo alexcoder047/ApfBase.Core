@@ -12,9 +12,9 @@ namespace ApfBuilder.PowerFlow.Factory
 
         private PowerFlowCollectionFactory(IEnumerable<ICriterion> criteria)
         {
-            var baseState = criteria.ForCase(CriterionCase.BaseState);
-            var forcedState = criteria.ForCase(CriterionCase.ForcedState);
-            var additional = criteria.ForCase(CriterionCase.Additional);
+            var baseState = criteria.ForSelectedCase(CriterionCase.BaseState);
+            var forcedState = criteria.ForSelectedCase(CriterionCase.ForcedState);
+            var additional = criteria.ForSelectedCase(CriterionCase.Additional);
 
             var originalBaseState = baseState.UnwrapAll();
             var originalForcedState = forcedState.UnwrapAll();

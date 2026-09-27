@@ -31,12 +31,14 @@ namespace ApfBuilder.Criteria
                 .Concat(CriterionSelector.MinDetectSelector(
                     byComplexSelector, x => x.Value)
                 )
+                .WithSelectedCase(CriterionCase.BaseState)
                 .ToArray();
 
             var forcedStateCriteria =
                 CriterionSelector
                 .NotNullDetectSelector(byCase[CriterionCase.ForcedState],
                     x => x.Value)
+                .WithSelectedCase(CriterionCase.ForcedState)
                 .ToArray();
 
             var additionalCriteria =
@@ -53,12 +55,13 @@ namespace ApfBuilder.Criteria
                                 VerificationCriterionHelper
                                     .CanUse(verification);
                     })
+                    .WithSelectedCase(CriterionCase.Additional)
                     .ToArray();
 
             return baseStateCriteria
                 .Concat(forcedStateCriteria)
                 .Concat(additionalCriteria)
-                .DistinctByInner()
+                .MergeSelectedCases()
                 .ToArray();
         }
     }

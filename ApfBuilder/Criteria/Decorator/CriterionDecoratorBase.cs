@@ -26,6 +26,8 @@ namespace ApfBuilder.Criteria.Decorator
 
         public virtual CriterionCase Case => Inner.Case;
 
+        public virtual CriterionCase SelectedCase => Inner.SelectedCase;
+
         protected CriterionDecoratorBase(ICriterion inner) 
             => Inner = inner ?? 
                 throw new ArgumentNullException(

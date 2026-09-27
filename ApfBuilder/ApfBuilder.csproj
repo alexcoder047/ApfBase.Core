@@ -94,6 +94,7 @@
     <Compile Include="Criteria\Core\Voltage.cs" />
     <Compile Include="Criteria\Core\VoltageSecondary.cs" />
     <Compile Include="Criteria\Decorator\ICriterionDecorator.cs" />
+    <Compile Include="Criteria\Decorator\SelectedCaseCriterionDecorator.cs" />
     <Compile Include="Criteria\Extension\CriterionCaseExtension.cs" />
     <Compile Include="Criteria\Extension\CriterionDecoratorExtension.cs" />
     <Compile Include="Criteria\Extension\CriterionEnumerableExtension.cs" />
