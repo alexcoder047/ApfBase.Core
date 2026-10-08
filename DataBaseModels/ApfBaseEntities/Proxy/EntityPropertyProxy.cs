@@ -719,21 +719,39 @@ namespace DataBaseModels.ApfBaseEntities
             }
         }
 
-        [ProxyFor(nameof(LimitPowerFlow))]
-        [ProxyFor(nameof(TprPowerFlow))]
-        [ProxyFor(nameof(EprPowerFlow))]
-        public double? LimitPowerFlowProxy
+        [ProxyFor(nameof(TprPowerFlowProxy))]
+        public double? TprPowerFlowProxy
         {
-            get => LimitPowerFlow;
+            get => this.LimitPowerFlow * 0.8;
             set
             {
-                LimitPowerFlow = value;
-                TprPowerFlow = 0.8 * value;
-                EprPowerFlow = 0.92 * value;
+                TprPowerFlowProxy = this.LimitPowerFlow * 0.8;
 
-                OnPropertyChanged(nameof(LimitPowerFlow));
-                OnPropertyChanged(nameof(TprPowerFlow));
-                OnPropertyChanged(nameof(EprPowerFlow));
+                OnPropertyChanged(nameof(TprPowerFlowProxy));
+            }
+        }
+
+        [ProxyFor(nameof(SMMSPowerFlowProxy))]
+        public double? SMMSPowerFlowProxy
+        {
+            get => this.LimitPowerFlow * 0.9;
+            set
+            {
+                SMMSPowerFlowProxy = this.LimitPowerFlow * 0.9;
+
+                OnPropertyChanged(nameof(SMMSPowerFlowProxy));
+            }
+        }
+
+        [ProxyFor(nameof(EprPowerFlowProxy))]
+        public double? EprPowerFlowProxy
+        {
+            get => this.LimitPowerFlow * 0.92;
+            set
+            {
+                EprPowerFlowProxy = this.LimitPowerFlow * 0.92;
+
+                OnPropertyChanged(nameof(EprPowerFlowProxy));
             }
         }
 

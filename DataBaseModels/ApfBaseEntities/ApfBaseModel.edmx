@@ -128,6 +128,7 @@
           <Property Name="Number" Type="int" />
           <Property Name="Name" Type="nvarchar" MaxLength="100" />
           <Property Name="RoundValue" Type="int" />
+          <Property Name="SafetyFactor" Type="int" />
         </EntityType>
         <EntityType Name="BranchGroupScheme">
           <Key>
@@ -289,8 +290,6 @@
           <Property Name="UsingApf" Type="bit" />
           <Property Name="UsingFSpf" Type="bit" />
           <Property Name="LimitPowerFlow" Type="float" />
-          <Property Name="TprPowerFlow" Type="float" />
-          <Property Name="EprPowerFlow" Type="float" />
           <Property Name="CurrentPowerFlow" Type="float" />
           <Property Name="CurrentAOPO" Type="float" />
           <Property Name="VoltagePowerFlow" Type="float" />
@@ -1365,6 +1364,7 @@
           <NavigationProperty Name="Conditions" Relationship="ApfBaseModel.Conditions_BranchGroup_fk" FromRole="BranchGroup" ToRole="Conditions" />
           <NavigationProperty Name="DAR" Relationship="ApfBaseModel.DAR_BranchGroup_fk" FromRole="BranchGroup" ToRole="DAR" />
           <NavigationProperty Name="Disturbances" Relationship="ApfBaseModel.Disturbances_BranchGroup_fk" FromRole="BranchGroup" ToRole="Disturbances" />
+          <Property Name="SafetyFactor" Type="Int32" />
         </EntityType>
         <EntityType Name="BranchGroupScheme">
           <Key>
@@ -1547,8 +1547,6 @@
           <Property Name="UsingApf" Type="Boolean" />
           <Property Name="UsingFSpf" Type="Boolean" />
           <Property Name="LimitPowerFlow" Type="Double" />
-          <Property Name="TprPowerFlow" Type="Double" />
-          <Property Name="EprPowerFlow" Type="Double" />
           <Property Name="CurrentPowerFlow" Type="Double" />
           <Property Name="CurrentAOPO" Type="Double" />
           <Property Name="VoltagePowerFlow" Type="Double" />
@@ -2245,6 +2243,7 @@
           <EntitySetMapping Name="BranchGroup">
             <EntityTypeMapping TypeName="ApfBaseModel.BranchGroup">
               <MappingFragment StoreEntitySet="BranchGroup">
+                <ScalarProperty Name="SafetyFactor" ColumnName="SafetyFactor" />
                 <ScalarProperty Name="RoundValue" ColumnName="RoundValue" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Number" ColumnName="Number" />
@@ -2401,8 +2400,6 @@
                 <ScalarProperty Name="VoltagePowerFlow" ColumnName="VoltagePowerFlow" />
                 <ScalarProperty Name="CurrentAOPO" ColumnName="CurrentAOPO" />
                 <ScalarProperty Name="CurrentPowerFlow" ColumnName="CurrentPowerFlow" />
-                <ScalarProperty Name="EprPowerFlow" ColumnName="EprPowerFlow" />
-                <ScalarProperty Name="TprPowerFlow" ColumnName="TprPowerFlow" />
                 <ScalarProperty Name="LimitPowerFlow" ColumnName="LimitPowerFlow" />
                 <ScalarProperty Name="UsingFSpf" ColumnName="UsingFSpf" />
                 <ScalarProperty Name="UsingApf" ColumnName="UsingApf" />

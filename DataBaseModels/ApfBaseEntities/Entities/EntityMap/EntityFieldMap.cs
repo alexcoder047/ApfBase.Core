@@ -1030,6 +1030,15 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "RoundValue",
                                         FieldName = "Коэффициент округления",
                                         DataType = typeof(int?),
+                                        Index = 3,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "SafetyFactor",
+                                        FieldName = "Коэффициент запаса",
+                                        DataType = typeof(int?),
                                         Index = 4,
                                         Visible = true,
                                         IsReadOnly = false
@@ -1610,7 +1619,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         DataType = typeof(string),
                                         Index = 1,
                                         Visible = true,
-                                        IsReadOnly = false
+                                        IsReadOnly = true
                                     },
                                     new FieldDefinition()
                                     {
@@ -1866,43 +1875,35 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                     },
                                     new FieldDefinition()
                                     {
-                                        Name = "BoundingElementsProxy",
-                                        FieldName = "Ограничивающий элемент",
-                                        DataType = typeof(int?),
+                                        Name = "InfluencingEquipmentProxy",
+                                        FieldName = "Влияющее оборудование",
+                                        DataType = typeof(Guid?),
                                         Index = 5,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
                                     new FieldDefinition()
                                     {
-                                        Name = "InfluencingEquipmentProxy",
-                                        FieldName = "Влияющее оборудование",
-                                        DataType = typeof(Guid?),
+                                        Name = "LimitPowerFlow",
+                                        FieldName = "Предельно допустимый переток по СУ",
+                                        DataType = typeof(double?),
                                         Index = 6,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
                                     new FieldDefinition()
                                     {
-                                        Name = "LimitPowerFlowProxy",
-                                        FieldName = "Предельно допустимый переток по СУ",
+                                        Name = "TprPowerFlowProxy",
+                                        FieldName = "80% ДП по СУ",
                                         DataType = typeof(double?),
                                         Index = 7,
                                         Visible = true,
-                                        IsReadOnly = false
-                                    },
-                                    new FieldDefinition()
-                                    {
-                                        Name = "LimitPowerFlow",
-                                        FieldName = "LimitPowerFlow",
-                                        DataType = typeof(double?),
-                                        Visible = false,
                                         IsReadOnly = true
                                     },
                                     new FieldDefinition()
                                     {
-                                        Name = "TprPowerFlow",
-                                        FieldName = "80% ДП по СУ",
+                                        Name = "SMMSPowerFlowProxy",
+                                        FieldName = "90% ДП по СУ",
                                         DataType = typeof(double?),
                                         Index = 8,
                                         Visible = true,
@@ -1910,7 +1911,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                     },
                                     new FieldDefinition()
                                     {
-                                        Name = "EprPowerFlow",
+                                        Name = "EprPowerFlowProxy",
                                         FieldName = "92% ДП по СУ",
                                         DataType = typeof(double?),
                                         Index = 9,
@@ -1946,10 +1947,19 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                     },
                                     new FieldDefinition()
                                     {
+                                        Name = "BoundingElementsProxy",
+                                        FieldName = "Ограничивающий элемент",
+                                        DataType = typeof(int?),
+                                        Index = 13,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
                                         Name = "ConditionsCurrentProxy",
                                         FieldName = "Переменные (Ток)",
                                         DataType = typeof(int?),
-                                        Index = 13,
+                                        Index = 14,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -1958,7 +1968,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "VoltagePowerFlow",
                                         FieldName = "ДП по напряжению",
                                         DataType = typeof(double?),
-                                        Index = 14,
+                                        Index = 15,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -1967,7 +1977,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "ConditionsVoltageProxy",
                                         FieldName = "Переменные (Напряжение)",
                                         DataType = typeof(int?),
-                                        Index = 15,
+                                        Index = 16,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -1976,7 +1986,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "IrOscExpressions",
                                         FieldName = "Нерегулярные колебания",
                                         DataType = typeof(int?),
-                                        Index = 16,
+                                        Index = 17,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -1985,7 +1995,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "Comment",
                                         FieldName = "Комментарий",
                                         DataType = typeof(string),
-                                        Index = 17,
+                                        Index = 18,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -2193,19 +2203,10 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                     },
                                     new FieldDefinition()
                                     {
-                                        Name = "BoundingElementsProxy",
-                                        FieldName = "Ограничивающий элемент",
-                                        DataType = typeof(int?),
-                                        Index = 3,
-                                        Visible = true,
-                                        IsReadOnly = false
-                                    },
-                                    new FieldDefinition()
-                                    {
                                         Name = "EprPowerFlow",
                                         FieldName = "92% ДП по СУ",
                                         DataType = typeof(double?),
-                                        Index = 4,
+                                        Index = 3,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -2214,7 +2215,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "DynamicPowerFlow",
                                         FieldName = "ДП по ДУ",
                                         DataType = typeof(double?),
-                                        Index = 5,
+                                        Index = 4,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -2223,7 +2224,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "CurrentPowerFlow",
                                         FieldName = "ДП по току",
                                         DataType = typeof(double?),
-                                        Index = 6,
+                                        Index = 5,
                                         Visible = true,
                                         IsReadOnly = false
                                     },
@@ -2232,6 +2233,15 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         Name = "CurrentAOPO",
                                         FieldName = "ДП по току (АОПО)",
                                         DataType = typeof(double?),
+                                        Index = 6,
+                                        Visible = true,
+                                        IsReadOnly = false
+                                    },
+                                    new FieldDefinition()
+                                    {
+                                        Name = "BoundingElementsProxy",
+                                        FieldName = "Ограничивающий элемент",
+                                        DataType = typeof(int?),
                                         Index = 7,
                                         Visible = true,
                                         IsReadOnly = false

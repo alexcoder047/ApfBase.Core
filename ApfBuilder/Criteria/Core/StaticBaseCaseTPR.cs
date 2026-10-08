@@ -23,14 +23,22 @@ namespace ApfBuilder.Criteria.Core
                   preF?.BranchGroupVsBranchGroupScheme
                       ?.BranchGroup
                       ?.RoundValue,
-                  preF.TprPowerFlow - preF.IrOscExpressions
-                    ?? preF.TprPowerFlow,
+                  preF.LimitPowerFlow * (1 - preF?.BranchGroupVsBranchGroupScheme
+                                            ?.BranchGroup
+                                            ?.SafetyFactor / 100) - preF.IrOscExpressions
+                    ?? preF.LimitPowerFlow * (1 - preF?.BranchGroupVsBranchGroupScheme
+                                            ?.BranchGroup
+                                            ?.SafetyFactor / 100),
                   preF.ConditionsStatic
             )
         {
             try
             {
-                Name = "20% P, исходная схема";
+                var sf = preF?.BranchGroupVsBranchGroupScheme
+                               ?.BranchGroup
+                               ?.SafetyFactor;
+
+                Name = $"{sf}% P, исходная схема";
                 Condition = preF.ConditionsStatic;
             }
             catch (Exception ex)

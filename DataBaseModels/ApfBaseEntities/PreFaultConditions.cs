@@ -32,8 +32,6 @@ namespace DataBaseModels.ApfBaseEntities
         public Nullable<bool> UsingApf { get; set; }
         public Nullable<bool> UsingFSpf { get; set; }
         public Nullable<double> LimitPowerFlow { get; set; }
-        public Nullable<double> TprPowerFlow { get; set; }
-        public Nullable<double> EprPowerFlow { get; set; }
         public Nullable<double> CurrentPowerFlow { get; set; }
         public Nullable<double> CurrentAOPO { get; set; }
         public Nullable<double> VoltagePowerFlow { get; set; }

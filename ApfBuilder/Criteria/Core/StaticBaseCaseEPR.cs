@@ -9,13 +9,15 @@ namespace ApfBuilder.Criteria.Core
     [EmergencyAPF]
     public sealed class StaticBaseCaseEPR : CriterionBase, IBaseCaseCriterion
     {
+        private const double EprCoeff = 0.92;
+
         public static ICriterion CreateStandard(
             PreFaultConditions preF)
         {
             return new StaticBaseCaseEPR
                 (
                     preF,
-                    preF.EprPowerFlow
+                    preF.LimitPowerFlow * EprCoeff
                 );
         }
 
@@ -26,8 +28,9 @@ namespace ApfBuilder.Criteria.Core
                 (
                     preF,
                     preF.IrOscExpressions != null
-                        ? preF.EprPowerFlow - preF.IrOscExpressions * 2
-                        : preF.EprPowerFlow
+                        ? preF.LimitPowerFlow * EprCoeff - 
+                            preF.IrOscExpressions * 2
+                        : preF.LimitPowerFlow * EprCoeff
                 );
         }
 
