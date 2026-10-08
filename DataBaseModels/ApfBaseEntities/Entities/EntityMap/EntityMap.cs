@@ -43,7 +43,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                 },
                 { 
                     typeof(InfluencingEquipment), 
-                    ("Влияющее оборудование", "Оборудование", false) 
+                    ("Влияющее оборудование", "Оборудование", true) 
                 },
                 { 
                     typeof(BoundingElements), 

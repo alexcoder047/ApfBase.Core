@@ -1619,7 +1619,7 @@ namespace DataBaseModels.ApfBaseEntities.Entities.EntityMap
                                         DataType = typeof(string),
                                         Index = 1,
                                         Visible = true,
-                                        IsReadOnly = true
+                                        IsReadOnly = false
                                     },
                                     new FieldDefinition()
                                     {
